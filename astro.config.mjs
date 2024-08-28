@@ -6,16 +6,16 @@ export default defineConfig({
   integrations: [
     starlight({
       title: "opendata.studio documentation",
+      logo: {
+        src: './src/assets/logo.svg',
+      },
       social: {
         github: "https://github.com/opendatafit/docs",
       },
       sidebar: [
         {
-          label: "Guides",
-          items: [
-            // Each item here is one entry in the navigation menu.
-            { label: "Example Guide", slug: "guides/example" },
-          ],
+          label: "Introduction",
+          items: [{ label: "Datapackages", slug: "intro/datapackages" }],
         },
         {
           label: "Reference",
