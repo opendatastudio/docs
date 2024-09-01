@@ -10,7 +10,7 @@ export default defineConfig({
         src: './src/assets/logo.svg',
       },
       social: {
-        github: "https://github.com/opendatafit/docs",
+        github: "https://github.com/opendatastudio/docs",
       },
       sidebar: [
         {
