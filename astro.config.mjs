@@ -5,9 +5,10 @@ import starlight from "@astrojs/starlight";
 export default defineConfig({
   integrations: [
     starlight({
-      title: "opendata.studio documentation",
+      title: "opendata.studio docs",
       logo: {
-        src: './src/assets/logo.svg',
+        light: './src/assets/logo.svg',
+        dark: './src/assets/logo_dark.svg',
       },
       social: {
         github: "https://github.com/opendatastudio/docs",

@@ -1,0 +1,59 @@
+---
+title: Introduction to datapackages
+description: An introduction to opendata.studio datapackages
+---
+
+import { FileTree } from "@astrojs/starlight/components";
+
+## What are datapackages?
+
+An opendata.studio **datapackage** is a complete description of a data analysis.
+
+A datapackage contains definitions for:
+
+- Data (**resources** and **metaschemas**)
+- Analysis (**algorithms**, **arguments**, and **containers**)
+- Visualisations (**views** and **pages**)
+
+Datapackages can be executed via our web interface or [command line tool](https://github.com/opendatastudio/cli), maintaining a reproducible record of the analysis performed which can then be readily published.
+
+## Datapackage structure
+
+opendata.studio datapackages are based on the open-source [Frictionless Data Package](https://specs.frictionlessdata.io/data-package/) specification.
+
+At the most basic level, a datapackage is a git repository consisting of `.json` configuration files describing each element of a data analysis.
+
+A datapackage might look as follows:
+
+<FileTree>
+  - **resources/** input and output data - data.json - params.json -
+  metaschemas/ metaschemas describe the format of resources - data.json -
+  params.json - **algorithms/** the analysis code - ic50.json - ic50.py -
+  arguments/ arguments describe the signature of the algorithm -
+  ic50.default.json - containers/ the container the code will execute in -
+  ic50-container - Dockerfile - **views/** visualisations - fitGraph.json -
+  fitGraph.py - pages/ defines the web app interface for this datapackage -
+  main.json - datapackage.json
+</FileTree>
+
+## Basic elements of a datapackage
+
+### Data
+
+#### Resources
+
+##### Tabular data
+
+##### Parameter data
+
+### Analysis
+
+#### Algorithms
+
+#### Arguments
+
+### Visualisation
+
+#### Views
+
+#### Pages

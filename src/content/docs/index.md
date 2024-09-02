@@ -4,8 +4,8 @@ description: Learn about opendata.studio components
 template: splash
 hero:
   tagline: "Welcome to the opendata.studio documentation! Start here:"
-  image:
-    file: ../../assets/logo.svg
+  # image:
+  #   file: ../../assets/logo_dark.svg
   actions:
     - text: Introduction to datapackages
       link: /intro/datapackages/
