@@ -7,8 +7,8 @@ export default defineConfig({
     starlight({
       title: "opendata.studio docs",
       logo: {
-        light: './src/assets/logo.svg',
-        dark: './src/assets/logo_dark.svg',
+        light: "./src/assets/logo.svg",
+        dark: "./src/assets/logo_dark.svg",
       },
       social: {
         github: "https://github.com/opendatastudio/docs",
