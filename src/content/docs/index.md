@@ -8,7 +8,7 @@ hero:
   #   file: ../../assets/logo_dark.svg
   actions:
     - text: Introduction to datapackages
-      link: /intro/datapackages/
+      link: /intro/helloworld/
       icon: right-arrow
     - text: The opendata.studio project
       link: https://opendata.studio

@@ -16,7 +16,10 @@ export default defineConfig({
       sidebar: [
         {
           label: "Introduction",
-          items: [{ label: "Datapackages", slug: "intro/datapackages" }],
+          items: [
+            { label: "What are datapackages?", slug: "intro/intro" },
+            { label: "Hello world!", slug: "intro/helloworld" },
+          ],
         },
         {
           label: "Reference",

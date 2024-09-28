@@ -1,0 +1,190 @@
+---
+title: Hello world!
+description: A very simple datapackage tutorial
+---
+
+import { FileTree } from "@astrojs/starlight/components";
+import { Aside } from "@astrojs/starlight/components";
+
+<Aside type="tip">
+  All of the examples covered in this tutorial are available at our
+  [helloworld-datapackage](https://github.com/opendatastudio/helloworld-datapackage)
+  repository.
+</Aside>
+
+Let's create a simple datapackage to add some numbers together.
+
+## Installing the CLI
+
+First, we need to install the opendata.studio [CLI]().
+
+```bash
+python --version  # Ensure you have a Python version >= 3.11 installed
+pip install opendatacli
+```
+
+If everything is working, you should see the following output when you type `opends`:
+
+```
+Usage: opends [OPTIONS] COMMAND [ARGS]...
+Try 'opends --help' for help.
+╭─ Error ─────────────────────────────────────────────────────────────────────╮
+│ Missing command.                                                            │
+╰─────────────────────────────────────────────────────────────────────────────╯
+```
+
+## Creating a new datapackage
+
+Let's create a new datapackage. The `opends` CLI tool provides a convenient command to do this:
+
+```bash
+opends new helloworld
+```
+
+This will create a new datapackage inside a directory called `helloworld-datapackage`.
+
+This is what your new datapackage should look like:
+
+{/* prettier-ignore */}
+<FileTree>
+- helloworld-datapackage/
+  - helloworld/
+    - algorithm.json
+    - algorithm.py
+  - datapackage.json
+</FileTree>
+
+This simple starter datapackage contains an algorithm that takes a single numerical input and multiplies it by 2.
+
+## Your first run
+
+Let's run your new datapackage. First, initialise the default run:
+
+```bash
+cd helloworld-datapackage
+opends init
+```
+
+This will create a directory called `helloworld.run` in the root of your datapackage directory.
+
+{/* prettier-ignore */}
+<FileTree>
+- helloworld-datapackage/
+  - helloworld/
+  - **helloworld.run/**
+    - run.json
+  - datapackage.json
+</FileTree>
+
+This directory stores all the information about your run so that others can easily reproduce the same analysis. `run.json` stores the run configuration - the input and output values of your analysis and their associated options. This is updated by the CLI every time you execute the run.
+
+By default, the input value is set to the default value specified in `algorithm.json`. You can set the input value to something else if you'd like:
+
+```bash
+opends set input 9001
+```
+
+Now we can execute the run:
+
+```bash
+opends run
+```
+
+And view the result:
+
+```bash
+opends show input
+# ╭─ input ─╮
+# │ 42      │
+# ╰─────────╯
+
+opends show output
+# ╭─ output ─╮
+# │ 84       │
+# ╰──────────╯
+```
+
+Our algorithm took the input variable value, 42, and multiplied it by 2 to get 84.
+
+## Adding an input
+
+Let's modify our algorithm to add two inputs together instead of just multiplying a single input.
+
+First, open up `helloworld/algorithm.json`:
+
+<FileTree>
+  - helloworld-datapackage/ - helloworld/ - **algorithm.json** - algorithm.py -
+  datapackage.json
+</FileTree>
+
+```json ""name": "input"" ""name": "output""
+{
+  "name": "helloworld",
+  "title": "New algorithm",
+  "profile": "opends-algorithm",
+  "code": "algorithm.py",
+  "container": "opends/python-run-base:v1",
+  "signature": {
+    "inputs": [
+      {
+        "name": "input",
+        "title": "Input",
+        "description": "An input variable",
+        "type": "number",
+        "null": false,
+        "default": {
+          "value": 42
+        }
+      }
+    ],
+    "outputs": [
+      {
+        "name": "output",
+        "title": "Output",
+        "description": "An output variable",
+        "type": "number",
+        "null": true,
+        "default": {
+          "value": null
+        }
+      }
+    ]
+  }
+}
+```
+
+Here you can see the definitons of our two variables, `input` and `output`. To add another input, we need to add another input definition to the `inputs` list:
+
+```json ins={16-25}
+{
+  "name": "helloworld",
+  ...
+  "signature": {
+    "inputs": [
+      {
+        "name": "a",
+        "title": "A",
+        "description": "A number to add",
+        "type": "number",
+        "null": false,
+        "default": {
+          "value": 40
+        }
+      },
+      {
+        "name": "b",
+        "title": "B",
+        "description": "A second number to add",
+        "type": "number",
+        "null": false,
+        "default": {
+          "value": 2
+        }
+      }
+    ],
+    "outputs": [
+      ...
+    ]
+  }
+}
+```

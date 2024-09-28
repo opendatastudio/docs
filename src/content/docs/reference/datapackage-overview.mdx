@@ -1,0 +1,129 @@
+---
+title: Datapackage overview
+description: Datapackage reference overview
+---
+
+import { FileTree } from "@astrojs/starlight/components";
+
+## Datapackage structure
+
+opendata.studio datapackages are based on the open-source [Frictionless Data Package](https://specs.frictionlessdata.io/data-package/) specification.
+
+At the most basic level, a datapackage is a git repository consisting of `.json` configuration files describing each element of a data analysis.
+
+We will demonstrate with a simple datapackage containing an IC50 curve fitting algorithm.
+
+An uninitialised datapackage might look as follows:
+
+opendata.studio datapackages are built on the open-source [Frictionless Data Package](https://specs.frictionlessdata.io/data-package/) specification.
+
+A datapackage is a Git repository containing .json configuration files that define each data analysis component.
+
+Let’s look at an example datapackage describing a matrix transformation algorithm.
+
+Before initialization, the datapackage will look like this:
+
+- simple addition example
+- simple tabular data analysis - average all data in multiple columns
+
+{/* prettier-ignore */}
+<FileTree>
+  - **ic50/**
+    - algorithm.json
+    - algorithm.py
+    - **resources/**
+      - data.json
+      - params.json
+    - **metaschemas/**
+    - **container/**
+        - Dockerfile
+    - **views/**
+    - **interfaces/**
+</FileTree>
+
+## Basic elements of a datapackage
+
+### Data
+
+Data in a datapackage is described by Frictionless [**resources**](https://specs.frictionlessdata.io/data-resource/).
+
+{/* prettier-ignore */}
+<FileTree>
+  - ...
+  - **resources/**
+    - data.json
+    - params.json
+  - ...
+</FileTree>
+
+#### Resources
+
+##### Tabular data
+
+Tabular data is described by the Frictionless [Tabular Data Resource](https://specs.frictionlessdata.io/tabular-data-resource/) specification.
+
+##### Parameter data
+
+Parameter data is described by a modified Tabular Data Resource specification.
+
+### Analysis
+
+Analysis code is defined by **algorithms**, the **schemas** their inputs and outputs must conform to, and the **containers** they execute in. _Configurations_ describe how to execute the algorithm.
+
+{/* prettier-ignore */}
+<FileTree>
+  - ...
+  - **algorithms/**
+    - ic50.json
+    - ic50.py
+    - configurations/
+      - ic50.default.json
+    - schemas/
+      - data.json
+      - params.json
+    - containers/
+      - ic50-container/
+        - Dockerfile
+  - ...
+</FileTree>
+
+#### Algorithms
+
+Algorithms describe the analysis code.
+
+All algorithms have a `signature`. The algorithm `signature` defines the inputs and outputs that the algorithm can take. A signature consists of many _arguments_.
+
+Note: we are using the word _argument_ here to refer to both inputs and outputs here for brevity.
+
+##### Schemas
+
+Schemas describe the format that algorithm input and output resources are allowed to take. For example:
+
+#### Configurations
+
+**Configurations** describe how to execute the algorithm they refer to. They contain a description of the setup of a single algorithm run, linking algorithm arguments to input and output resources along with the schemas they must conform to.
+
+Configurations describe a specific configuration of inputs and outputs for a single algorithm run.
+
+Configurations describe the setup of a single `algorithm` run, including input and output `resources` and what `schemas` they must conform to.
+
+### Visualisation
+
+Visualisations are described by **views** which can be rendered individually or as part of interactive **interfaces**.
+
+{/* prettier-ignore */}
+<FileTree>
+  - ...
+  - **views/**
+    - fitGraph.json
+    - fitGraph.py
+  - **interfaces/**
+    - ic50.json
+  - ...
+</FileTree>
+
+#### Views
+
+#### Interfaces
+
+_Interfaces_ describe how to render a collection of views into an interactive user interface.
