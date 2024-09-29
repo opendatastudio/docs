@@ -1,0 +1,221 @@
+---
+title: Working with tabular data
+description: Working with tabular data resources in a datapackage
+---
+
+import { FileTree } from "@astrojs/starlight/components";
+import { Aside } from "@astrojs/starlight/components";
+
+In this tutorial, we'll create a datapackage that takes a table containing two columns of time series data, and averages them along the time axis.
+
+## Creating resources
+
+To use tabular data in a datapackage, we need to define a **resource** to contain it.
+
+First, reset your datapackage to remove any previous runs and return it to a clean state.
+
+Then, create files for your new input `data` and output `aveage` resources under the `helloworld` algorithm folder:
+
+```bash
+opends reset
+mkdir helloworld/resources
+touch helloworld/resources/data.json
+touch helloworld/resources/average.json
+```
+
+Your datapackage should now look like:
+
+{/* prettier-ignore */}
+<FileTree>
+- helloworld-datapackage/
+  - helloworld/
+    - algorithm.json
+    - algorithm.py
+    - **resources/**
+      - **data.json**
+      - **average.json**
+  - datapackage.json
+</FileTree>
+
+Open up `helloworld/resources/data.json` and write the following configuration:
+
+```json title="helloworld/resources/data.json"
+{
+  "name": "data",
+  "title": "Data",
+  "description": "Time series data",
+  "profile": "tabular-data-resource",
+  "schema": {
+    "primaryKey": "time",
+    "fields": [
+      {
+        "name": "time",
+        "title": "Time",
+        "unit": "s",
+        "type": "number"
+      },
+      {
+        "name": "y1",
+        "title": "Y1",
+        "unit": "",
+        "type": "number"
+      },
+      {
+        "name": "y2",
+        "title": "Y2",
+        "unit": "",
+        "type": "number"
+      }
+    ]
+  },
+  "data": []
+}
+```
+
+This file defines an empty tabular data resource that has three numerical columns: `time`, `y1` and `y2`.
+
+Now define the output `average` resource:
+
+```json title="helloworld/resources/average.json"
+{
+  "name": "average",
+  "title": "Average data",
+  "description": "Averaged time series data",
+  "profile": "tabular-data-resource",
+  "schema": {
+    "primaryKey": "time",
+    "fields": [
+      {
+        "name": "time",
+        "title": "Time",
+        "unit": "s",
+        "type": "number"
+      },
+      {
+        "name": "average",
+        "title": "Average",
+        "unit": "",
+        "type": "number"
+      }
+    ]
+  },
+  "data": []
+}
+```
+
+<Aside>
+  See the Frictionless Data [Tabular Data Resource
+  specification](https://specs.frictionlessdata.io/tabular-data-resource/) for
+  more information on tabular data resource structure.
+</Aside>
+
+## Linking resources to inputs and outputs
+
+In order for our algorithm to have access to our newly minted resources, we need to link them to its input and output variables. Open up `helloworld/algorithm.json` and modify its inputs and output configurations like so:
+
+```json title="helloworld/algorithm.json" ins={6-16} ins={19-29}
+{
+  "name": "helloworld",
+  ...
+  "signature": {
+    "inputs": [
+      {
+        "name": "data",
+        "title": "Data",
+        "description": "Input time series",
+        "type": "resource",
+        "profile": "tabular-data-resource",
+        "null": false,
+        "default": {
+          "resource": "data"
+        }
+      }
+    ],
+    "outputs": [
+      {
+        "name": "average",
+        "title": "Average",
+        "description": "Output time series average",
+        "type": "resource",
+        "profile": "tabular-data-resource",
+        "null": true,
+        "default": {
+          "resource": "average"
+        }
+      }
+    ]
+  }
+}
+```
+
+This tells our algorithm that the input `data` should be a tabular data resource that conforms to the schema we defined in `helloworld/resources/data.json`. In other words, we expect a table with three columns named `time`, `y1` and `y2`. Similarly, the output should be a table with two columns: `time` and `average`.
+
+## Modifying the algorithm
+
+Finally, we can modify our algorithm to take the input data and use it to calculate the averaged output. Note that by default, tabular data resources are passed to the algorithm as named pandas DataFrames.
+
+```python title="helloworld/algorithm.py"
+def main(data):
+    """Average a time series along the time axis"""
+    return {
+        "average": data.mean(axis=1).to_frame(name="average"),
+    }
+```
+
+## Loading data
+
+By convention, we put any input data files under a directory named `data` at the root of the datapackage. Create the `data` directory, open `data/data.csv` and paste the following table:
+
+```csv title="data/data.csv"
+time,y1,y2
+0,4.069,6.017
+1,5.043,6.666
+2,6.017,7.315
+3,6.666,7.315
+4,7.315,7.640
+5,7.965,7.965
+6,8.614,7.965
+7,9.263,7.965
+8,9.263,7.965
+9,9.913,7.965
+10,9.913,8.289
+11,10.237,8.289
+12,10.887,8.614
+13,11.211,8.939
+14,11.861,9.263
+15,12.510,9.588
+16,12.510,9.913
+17,13.159,10.237
+18,13.159,10.562
+19,13.484,10.887
+```
+
+Now we can load our data to be analysed. As always, first we need to initialise a new run:
+
+```bash
+opends init
+```
+
+And now we can load our data into the `data` resource:
+
+```bash
+opends load data/data.csv
+opends show data
+```
+
+And we're ready to run the algorithm!
+
+## Running the algorithm
+
+Execute the currently active run:
+
+```bash
+opends run
+```
+
+And view the result:
+
+```bash
+opends show data
+opends show average
+```

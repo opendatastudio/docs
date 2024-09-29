@@ -14,7 +14,9 @@ import { Aside } from "@astrojs/starlight/components";
 
 Let's create a simple datapackage to add some numbers together.
 
-## Installing the CLI
+## Prerequisites
+
+### Installing the CLI
 
 First, we need to install the opendata.studio [CLI]().
 
@@ -28,6 +30,16 @@ If everything is working, you should see the following output followed by a help
 ```bash
 # Usage: opends [OPTIONS] COMMAND [ARGS]...
 # ...
+```
+
+### Building the default execution container
+
+This only needs to be done once. In the future, this container will be available on DockerHub to download and you can skip this step.
+
+```bash
+git clone https://github.com/opendatastudio/python-run-base
+cd python-run-base
+./build.sh
 ```
 
 ## Creating a new datapackage
@@ -211,6 +223,8 @@ def main(x, y):
         "result": x + y,
     }
 ```
+
+## Running the new algorithm
 
 Now we're ready to execute:
 

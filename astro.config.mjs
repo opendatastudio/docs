@@ -19,6 +19,7 @@ export default defineConfig({
           items: [
             { label: "What are datapackages?", slug: "intro/intro" },
             { label: "Hello world!", slug: "intro/helloworld" },
+            { label: "Working with tabular data", slug: "intro/tabulardata" },
           ],
         },
         {
