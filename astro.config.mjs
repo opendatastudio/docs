@@ -20,6 +20,14 @@ export default defineConfig({
             { label: "What are datapackages?", slug: "intro/intro" },
             { label: "Hello world!", slug: "intro/helloworld" },
             { label: "Working with tabular data", slug: "intro/tabulardata" },
+            { label: "Handling multiple runs", slug: "intro/multipleruns" },
+            { label: "Tracking with git", slug: "intro/repositories" },
+            {
+              label: "Using custom Docker containers",
+              slug: "intro/containers",
+            },
+            { label: "Using relationships", slug: "intro/relationships" },
+            { label: "Using metaschemas", slug: "intro/metaschemas" },
           ],
         },
         {
