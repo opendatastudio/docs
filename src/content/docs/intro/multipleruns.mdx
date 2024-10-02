@@ -6,6 +6,144 @@ description: Handling multiple runs
 import { FileTree } from "@astrojs/starlight/components";
 import { Aside } from "@astrojs/starlight/components";
 
-Say you want to compare the results of an analysis of two different sets of data.
+Say you want to compare the results of two different analyses on the same set of data. To do this, you can create a separate run for each analysis.
 
-To do this, you can create multiple run configurations.
+## Modifying the algorithm
+
+First, let's modify our algorithm to give us the option of taking a median or a mode instead of a mean.
+
+Modify `helloworld/algorithm.py`:
+
+```python title="helloworld/algorithm.py" ins=", function" ins="getattr(data, function)"
+def main(data, function):
+    """Take the average along the long axis with the specified function"""
+    return {
+        "result": getattr(data, function)(axis=1).to_frame(name="result"),
+    }
+```
+
+Now wire up the new `function` argument to an input in `algorithm.json`:
+
+```json title="helloworld/algorithm.json ins={10-29}
+{
+  "name": "helloworld",
+  ...
+  "signature": {
+    "inputs": [
+      {
+        "name": "data",
+        ...
+      },
+      {
+        "name": "function",
+        "title": "Function",
+        "description": "The function to use for averaging (mean or median)",
+        "type": "string",
+        "null": false,
+        "enum": [
+          {
+            "title": "Mean",
+            "value": "mean"
+          },
+          {
+            "title": "Median",
+            "value": "median"
+          }
+        ],
+        "default": {
+          "value": "mean"
+        }
+      }
+    ],
+    "outputs": [
+      {
+        "name": "result",
+        ...
+      }
+    ]
+  }
+}
+```
+
+Here we're adding a simple input that takes a string, and specifying that it can take only two valid values: `mean` and `median` with the `enum` property.
+
+To see how this works, we can try and set our new input to the wrong value:
+
+```bash
+opends reset
+opends init  # Ensure we initialise a new run to use the updated algorithm signature
+opends set function "mode"
+```
+
+This should throw the following error:
+
+```
+Variable value must be one of ['mean', 'median']
+```
+
+However we can set the value to "median" with no issue:
+
+```bash
+opends set function "median"
+```
+
+## Creating a new run
+
+Let's create a new run to find the median of this dataset.
+
+```bash
+opends reset  # Reset the datapackage to a clean state again
+opends init helloworld.median
+```
+
+This command tells the CLI tool that we want to create a new run named `helloworld.median`. `helloworld` specifies the algorithm that we want to use for this run, and `median` is a user-chosen name for the run. The algorithm name before the period must match an algorithm listed in `datapackage.json`. The string following the period can be anything you like.
+
+You can check which run is currently active by running:
+
+```bash
+opends get-run
+```
+
+### Executing the run
+
+Let's find the median of our dataset. Run the following:
+
+```bash
+opends load data data/tabulardata.csv  # Load our data
+opends set function "median"           # Set our calculation function to "median"
+opends run                             # Run the algorithm
+```
+
+## The run folder structure
+
+Your datapackage should now look like this:
+
+{/* prettier-ignore */}
+<FileTree>
+- helloworld-datapackage/
+  - helloworld/
+    - algorithm.json
+    - algorithm.py
+    - resources/
+      - data.json
+      - result.json
+  - **helloworld.median.run/**
+    - run.json
+    - resources/
+      - data.json
+      - result.json
+    - views/
+  - datapackage.json
+</FileTree>
+
+As you can see, the resources appear in both the run directory (`helloworld.median.run`) and the algorithm definition directory (`helloworld`).
+
+The resources inside the algorithm definition directory serve as templates from which to generate the resources for a run.
+
+The resources inside the run directory represent the actual inputs and outputs that are recorded in the course of running an algorithm.
+
+Additionally, `run.json` records the values of any single value variable during a run (such as our new input variable - `function`).
+
+In this way, a run folder contains a complete description of the state of a single execution of the algorithm. This state can then be tracked in a version control repository to maintain a history of the analysis performed. This is covered in the next topic.
+
+## Creating a second run
