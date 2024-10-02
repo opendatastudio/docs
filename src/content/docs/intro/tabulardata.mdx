@@ -14,13 +14,13 @@ To use tabular data in a datapackage, we need to define a **resource** to contai
 
 First, reset your datapackage to remove any previous runs and return it to a clean state.
 
-Then, create files for your new input `data` and output `aveage` resources under the `helloworld` algorithm folder:
+Then, create files for your new input `data` and output `mean` resources under the `helloworld` algorithm folder:
 
 ```bash
 opends reset
 mkdir helloworld/resources
 touch helloworld/resources/data.json
-touch helloworld/resources/average.json
+touch helloworld/resources/mean.json
 ```
 
 Your datapackage should now look like:
@@ -33,11 +33,11 @@ Your datapackage should now look like:
     - algorithm.py
     - **resources/**
       - **data.json**
-      - **average.json**
+      - **mean.json**
   - datapackage.json
 </FileTree>
 
-Open up `helloworld/resources/data.json` and write the following configuration:
+Open up `helloworld/resources/data.json` and write the following resource configuration:
 
 ```json title="helloworld/resources/data.json"
 {
@@ -65,6 +65,12 @@ Open up `helloworld/resources/data.json` and write the following configuration:
         "title": "Y2",
         "unit": "",
         "type": "number"
+      },
+      {
+        "name": "y3",
+        "title": "Y3",
+        "unit": "",
+        "type": "number"
       }
     ]
   },
@@ -72,15 +78,15 @@ Open up `helloworld/resources/data.json` and write the following configuration:
 }
 ```
 
-This file defines an empty tabular data resource that has three numerical columns: `time`, `y1` and `y2`.
+This file defines an empty tabular data resource that has four numerical columns: `time`, `y1`, `y2` and `y3`.
 
-Now define the output `average` resource:
+Now define the output `mean` resource:
 
-```json title="helloworld/resources/average.json"
+```json title="helloworld/resources/mean.json"
 {
-  "name": "average",
-  "title": "Average data",
-  "description": "Averaged time series data",
+  "name": "mean",
+  "title": "Mean",
+  "description": "The mean of the Y values in the input data",
   "profile": "tabular-data-resource",
   "schema": {
     "primaryKey": "time",
@@ -92,8 +98,8 @@ Now define the output `average` resource:
         "type": "number"
       },
       {
-        "name": "average",
-        "title": "Average",
+        "name": "mean",
+        "title": "Mean",
         "unit": "",
         "type": "number"
       }
@@ -133,14 +139,14 @@ In order for our algorithm to have access to our newly minted resources, we need
     ],
     "outputs": [
       {
-        "name": "average",
-        "title": "Average",
-        "description": "Output time series average",
+        "name": "mean",
+        "title": "Mean",
+        "description": "Output mean",
         "type": "resource",
         "profile": "tabular-data-resource",
         "null": true,
         "default": {
-          "resource": "average"
+          "resource": "mean"
         }
       }
     ]
@@ -148,17 +154,17 @@ In order for our algorithm to have access to our newly minted resources, we need
 }
 ```
 
-This tells our algorithm that the input `data` should be a tabular data resource that conforms to the schema we defined in `helloworld/resources/data.json`. In other words, we expect a table with three columns named `time`, `y1` and `y2`. Similarly, the output should be a table with two columns: `time` and `average`.
+This tells our algorithm that the input `data` should be a tabular data resource that conforms to the schema we defined in `helloworld/resources/data.json`. In other words, we expect a table with four columns named `time`, `y1`, `y2` and `y3`. Similarly, the output should be a table with two columns: `time` and `mean`.
 
 ## Modifying the algorithm
 
-Finally, we can modify our algorithm to take the input data and use it to calculate the averaged output. Note that by default, tabular data resources are passed to the algorithm as named pandas DataFrames.
+Finally, we can modify our algorithm to take the input data and use it to calculate the mean Y values. Note that by default, tabular data resources are passed to the algorithm as named pandas DataFrames.
 
 ```python title="helloworld/algorithm.py"
 def main(data):
-    """Average a time series along the time axis"""
+    """Take the mean of a time series along the time axis"""
     return {
-        "average": data.mean(axis=1).to_frame(name="average"),
+        "mean": data.mean(axis=1).to_frame(name="mean"),
     }
 ```
 
@@ -167,27 +173,27 @@ def main(data):
 By convention, we put any input data files under a directory named `data` at the root of the datapackage. Create the `data` directory, open `data/data.csv` and paste the following table:
 
 ```csv title="data/data.csv"
-time,y1,y2
-0,4.069,6.017
-1,5.043,6.666
-2,6.017,7.315
-3,6.666,7.315
-4,7.315,7.640
-5,7.965,7.965
-6,8.614,7.965
-7,9.263,7.965
-8,9.263,7.965
-9,9.913,7.965
-10,9.913,8.289
-11,10.237,8.289
-12,10.887,8.614
-13,11.211,8.939
-14,11.861,9.263
-15,12.510,9.588
-16,12.510,9.913
-17,13.159,10.237
-18,13.159,10.562
-19,13.484,10.887
+time,y1,y2,y3
+0,0.3466236167739929,1.9229864112201938,1.9773385447179885
+1,-0.423531510762412,1.815244986837378,0.3093182634287297
+2,0.8388100195422679,0.5294092767447518,2.3939153553311407
+3,2.948000020477774,4.617762280030524,3.8687019172620136
+4,2.45167677777786,5.847212829121721,3.8923485802253577
+5,5.4766419552463645,4.72575745115321,8.532849237909025
+6,4.879323325885309,5.686661651185716,7.544480088340276
+7,8.25876172347388,5.351542885848568,9.593184043973753
+8,6.442649354518041,8.124701252873464,12.028011411613441
+9,10.17816299109899,11.070663450465652,11.38092186367298
+10,10.638275752972232,10.21068506001679,14.502901841924242
+11,10.39655032109732,10.075927947286825,14.548589170502087
+12,13.752753943890596,11.453232126495813,13.637309525792178
+13,12.871660648894213,14.52673208008687,15.977125832484408
+14,15.105225370942517,14.906371462715821,16.344717175111533
+15,13.082135038555602,13.934245668163236,18.448606908623518
+16,17.012134132693777,14.813559971997769,21.021432688836136
+17,15.068090876715434,16.30445338493393,22.422137078073558
+18,16.356537810690007,19.958208464469358,20.464579389514533
+19,20.825401723837388,18.37126725210334,24.895029343034434
 ```
 
 Now we can load our data to be analysed. As always, first we need to initialise a new run:
@@ -210,12 +216,13 @@ opends show data
 
 This should return something like:
 
-| time | y1     | y2     |
-| ---- | ------ | ------ |
-| 0    | 4.069  | 6.017  |
-| 1    | 5.043  | 6.666  |
-| ...  | ...    | ...    |
-| 19   | 13.484 | 10.887 |
+| time | y1        | y2       | y3       |
+| ---- | --------- | -------- | -------- |
+| 0    | 0.346624  | 1.92299  | 1.97734  |
+| 1    | -0.423532 | 1.81524  | 0.309318 |
+| 2    | 0.83881   | 0.529409 | 2.39392  |
+| 3    | 2.948     | 4.61776  | 3.8687   |
+| ...  | ...       | ...      | ...      |
 
 And we're ready to run the algorithm!
 
@@ -230,19 +237,20 @@ opends run
 Now let's look at our result:
 
 ```bash
-opends show average
+opends show mean
 ```
 
 This should return:
 
-| time | average |
-| ---- | ------- |
-| 0    | 5.043   |
-| 1    | 5.8545  |
-| 2    | 6.666   |
-| ...  | ...     |
-| 19   | 12.1855 |
+| time | mean     |
+| ---- | -------- |
+| 0    | 1.41565  |
+| 1    | 0.567011 |
+| 2    | 1.25404  |
+| 3    | 3.81149  |
+| 4    | 4.06375  |
+| ...  | ...      |
 
-Here we've averaged the `y1` and `y2` columns together to get the values in `average`.
+Here we've averaged the `y1`, `y2` and `y3` columns together to get the values in `mean`.
 
 Next, we'll learn about working with multiple runs in a datapackage.
