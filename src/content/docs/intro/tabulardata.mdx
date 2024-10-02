@@ -200,8 +200,22 @@ And now we can load our data into the `data` resource:
 
 ```bash
 opends load data/data.csv
+```
+
+Let's check the data was loaded correctly:
+
+```bash
 opends show data
 ```
+
+This should return something like:
+
+| time | y1     | y2     |
+| ---- | ------ | ------ |
+| 0    | 4.069  | 6.017  |
+| 1    | 5.043  | 6.666  |
+| ...  | ...    | ...    |
+| 19   | 13.484 | 10.887 |
 
 And we're ready to run the algorithm!
 
@@ -213,9 +227,22 @@ Execute the currently active run:
 opends run
 ```
 
-And view the result:
+Now let's look at our result:
 
 ```bash
-opends show data
 opends show average
 ```
+
+This should return:
+
+| time | average |
+| ---- | ------- |
+| 0    | 5.043   |
+| 1    | 5.8545  |
+| 2    | 6.666   |
+| ...  | ...     |
+| 19   | 12.1855 |
+
+Here we've averaged the `y1` and `y2` columns together to get the values in `average`.
+
+Next, we'll learn about working with multiple runs in a datapackage.
