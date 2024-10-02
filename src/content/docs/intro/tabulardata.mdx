@@ -14,13 +14,13 @@ To use tabular data in a datapackage, we need to define a **resource** to contai
 
 First, reset your datapackage to remove any previous runs and return it to a clean state.
 
-Then, create files for your new input `data` and output `mean` resources under the `helloworld` algorithm folder:
+Then, create files for your new input `data` and output `result` resources under the `helloworld` algorithm folder:
 
 ```bash
 opends reset
 mkdir helloworld/resources
 touch helloworld/resources/data.json
-touch helloworld/resources/mean.json
+touch helloworld/resources/result.json
 ```
 
 Your datapackage should now look like:
@@ -33,7 +33,7 @@ Your datapackage should now look like:
     - algorithm.py
     - **resources/**
       - **data.json**
-      - **mean.json**
+      - **result.json**
   - datapackage.json
 </FileTree>
 
@@ -80,13 +80,13 @@ Open up `helloworld/resources/data.json` and write the following resource config
 
 This file defines an empty tabular data resource that has four numerical columns: `time`, `y1`, `y2` and `y3`.
 
-Now define the output `mean` resource:
+Now define the output `result` resource:
 
-```json title="helloworld/resources/mean.json"
+```json title="helloworld/resources/result.json"
 {
-  "name": "mean",
-  "title": "Mean",
-  "description": "The mean of the Y values in the input data",
+  "name": "result",
+  "title": "Result",
+  "description": "The average of the Y values in the input data",
   "profile": "tabular-data-resource",
   "schema": {
     "primaryKey": "time",
@@ -98,8 +98,8 @@ Now define the output `mean` resource:
         "type": "number"
       },
       {
-        "name": "mean",
-        "title": "Mean",
+        "name": "result",
+        "title": "Result",
         "unit": "",
         "type": "number"
       }
@@ -139,14 +139,14 @@ In order for our algorithm to have access to our newly minted resources, we need
     ],
     "outputs": [
       {
-        "name": "mean",
-        "title": "Mean",
-        "description": "Output mean",
+        "name": "result",
+        "title": "Result",
+        "description": "Averaged result",
         "type": "resource",
         "profile": "tabular-data-resource",
         "null": true,
         "default": {
-          "resource": "mean"
+          "resource": "result"
         }
       }
     ]
@@ -154,25 +154,25 @@ In order for our algorithm to have access to our newly minted resources, we need
 }
 ```
 
-This tells our algorithm that the input `data` should be a tabular data resource that conforms to the schema we defined in `helloworld/resources/data.json`. In other words, we expect a table with four columns named `time`, `y1`, `y2` and `y3`. Similarly, the output should be a table with two columns: `time` and `mean`.
+This tells our algorithm that the input `data` should be a tabular data resource that conforms to the schema we defined in `helloworld/resources/data.json`. In other words, we expect a table with four columns named `time`, `y1`, `y2` and `y3`. Similarly, the output should be a table with two columns: `time` and `result`.
 
 ## Modifying the algorithm
 
-Finally, we can modify our algorithm to take the input data and use it to calculate the mean Y values. Note that by default, tabular data resources are passed to the algorithm as named pandas DataFrames.
+Finally, we can modify our algorithm to take the input data and use it to calculate the average Y values. Note that by default, tabular data resources are passed to the algorithm as named pandas DataFrames.
 
 ```python title="helloworld/algorithm.py"
 def main(data):
-    """Take the mean of a time series along the time axis"""
+    """Take the average of the input data along the long axis"""
     return {
-        "mean": data.mean(axis=1).to_frame(name="mean"),
+        "result": data.mean(axis=1).to_frame(name="result"),
     }
 ```
 
 ## Loading data
 
-By convention, we put any input data files under a directory named `data` at the root of the datapackage. Create the `data` directory, open `data/data.csv` and paste the following table:
+By convention, we put any input data files under a directory named `data` at the root of the datapackage. Create the `data` directory, open `data/tabulardata.csv` and paste the following table:
 
-```csv title="data/data.csv"
+```csv title="data/tabulardata.csv"
 time,y1,y2,y3
 0,0.3466236167739929,1.9229864112201938,1.9773385447179885
 1,-0.423531510762412,1.815244986837378,0.3093182634287297
@@ -205,7 +205,7 @@ opends init
 And now we can load our data into the `data` resource:
 
 ```bash
-opends load data/data.csv
+opends load data/tabulardata.csv
 ```
 
 Let's check the data was loaded correctly:
@@ -237,12 +237,12 @@ opends run
 Now let's look at our result:
 
 ```bash
-opends show mean
+opends show result
 ```
 
 This should return:
 
-| time | mean     |
+| time | result   |
 | ---- | -------- |
 | 0    | 1.41565  |
 | 1    | 0.567011 |
@@ -251,6 +251,6 @@ This should return:
 | 4    | 4.06375  |
 | ...  | ...      |
 
-Here we've averaged the `y1`, `y2` and `y3` columns together to get the values in `mean`.
+Here we've averaged the `y1`, `y2` and `y3` columns together to get the values in `result`.
 
 Next, we'll learn about working with multiple runs in a datapackage.
