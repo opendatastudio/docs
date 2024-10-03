@@ -6,6 +6,84 @@ description: Using custom Docker containers with datapackages
 import { FileTree } from "@astrojs/starlight/components";
 import { Aside } from "@astrojs/starlight/components";
 
-You can use your own custom Docker containers to execute algorithms in.
+By default, algorithms in opendata.studio run in the python-run-base Docker container, which provides commonly used libraries such as `numpy` and `pandas`. If you need a library not included in this default container, you can easily create a custom Docker container to run your algorithm.
 
-By default, all algorithms are set to run in opendata.studio's default [python-run-base]() Docker container.
+## Creating a custom Docker container
+
+Let's say you need to use the scikit-learn library, which isn't included in python-run-base. To do this, you can create a custom container within the `helloworld` algorithm configuration directory:
+
+```bash
+mkdir helloworld/container
+touch helloworld/Dockerfile
+```
+
+Inside the Dockerfile, write the following container definition:
+
+```docker title="helloworld/Dockerfile"
+FROM opends/python-run-base:v1
+
+RUN pip install scikit-learn
+```
+
+This container definition uses `python-run-base` as the base image and installs `scikit-learn` on top.
+
+## Building your container
+
+Now you can build the custom Docker container by running:
+
+```bash
+docker build -t mycontainer.
+```
+
+This command creates your new container with the tag `mycontainer`.
+
+## Updating the algorithm configuration
+
+To use this custom container, you'll need to specify it in your algorithm's configuration file:
+
+Edit the algorithm.json file to point to your new container:
+
+```json title="helloworld/algorithm.json" ins="mycontainer"
+{
+  "name": "helloworld",
+  ...
+  "container": "mycontainer",
+  "signature": {
+    "inputs": [
+      ...
+    ],
+    "outputs": [
+      ...
+    ]
+  }
+}
+```
+
+This tells opendata.studio to use `mycontainer` when executing the `helloworld` algorithm.
+
+## Importing our new dependency
+
+Next, confirm that the custom container is working by importing `scikit-learn` in your algorithm. Open `helloworld/algorithm.py` and add the import statement:
+
+```python title="helloworld/algorithm.py" ins={1-2}
+import sklearn
+
+def main(data, function):
+    """Take the average along the long axis with the specified function"""
+    return {
+        "result": getattr(data, function)(axis=1).to_frame(name="result"),
+    }
+```
+
+## Running the algorithm
+
+Finally, run your algorithm using the following commands:
+
+```bash
+opends reset  # Reset to ensure we clear any old run configurations
+opends init
+opends load data data/tabulardata.csv  # Our algorithm will fail if we forget to load some input data
+opends run
+```
+
+If everything is set up correctly, your algorithm should execute in your custom container without any errors. Congrats - you've successfully executed your algorithm in a custom environment.
