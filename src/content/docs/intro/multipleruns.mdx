@@ -8,9 +8,11 @@ import { Aside } from "@astrojs/starlight/components";
 
 Say you want to compare the results of two different analyses on the same set of data. To do this, you can create a separate run for each analysis.
 
+In this tutorial, we'll first modify our algorithm to calculate either the median or the mean of the input dataset. We'll then create two runs - one to calculate the median, and one the mean. This allows us to record and compare the output of the two analyses.
+
 ## Modifying the algorithm
 
-First, let's modify our algorithm to give us the option of taking a median or a mode instead of a mean.
+First, let's modify our algorithm to give us the option of calculating a median instead of a mean.
 
 Modify `helloworld/algorithm.py`:
 
@@ -114,6 +116,21 @@ opends set function "median"           # Set our calculation function to "median
 opends run                             # Run the algorithm
 ```
 
+Your result should look like:
+
+```bash
+opends show result
+```
+
+| time | result   |
+| ---- | -------- |
+| 0    | 1.92299  |
+| 1    | 0.309318 |
+| 2    | 0.83881  |
+| 3    | 3.8687   |
+| 4    | 3.89235  |
+| ...  | ...      |
+
 ## The run folder structure
 
 Your datapackage should now look like this:
@@ -147,3 +164,53 @@ Additionally, `run.json` records the values of any single value variable during 
 In this way, a run folder contains a complete description of the state of a single execution of the algorithm. This state can then be tracked in a version control repository to maintain a history of the analysis performed. This is covered in the next topic.
 
 ## Creating a second run
+
+Now, say we want to calculate the mean of the same dataset without losing our previous result. To do this, we can create a new named run:
+
+```bash
+opends init helloworld.mean
+```
+
+Now we can load our input data, and set the function we want to use to calculate the result:
+
+```bash
+opends load data data/tabulardata.csv
+opends set function "mean"
+```
+
+Your result should look like:
+
+```bash
+opends show result
+```
+
+| time | result   |
+| ---- | -------- |
+| 0    | 1.41565  |
+| 1    | 0.567011 |
+| 2    | 1.25404  |
+| 3    | 3.81149  |
+| 4    | 4.06375  |
+| ...  | ...      |
+
+Now, since we saved the result of our previous run in `helloworld.median`, we can easily compare the two results:
+
+```bash
+opends set-run helloworld.median
+opends show result  # Print the "median" run result
+```
+
+Here they are side by side:
+
+| time | result (median) | result (mean) |
+| ---- | --------------- | ------------- |
+| 0    | 1.92299         | 1.41565       |
+| 1    | 0.309318        | 0.567011      |
+| 2    | 0.83881         | 1.25404       |
+| 3    | 3.8687          | 3.81149       |
+| 4    | 3.89235         | 4.06375       |
+| ...  | ...             | ...           |
+
+## Comparing run results with an algorithm
+
+To be implemented.
