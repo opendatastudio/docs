@@ -1,18 +1,18 @@
 ---
 title: Working with tabular data
-description: Working with tabular data resources in a datapackage
+description: Working with tabular data resources in a dataflow
 ---
 
 import { FileTree } from "@astrojs/starlight/components";
 import { Aside } from "@astrojs/starlight/components";
 
-In this tutorial, we'll create a datapackage that takes a table containing two columns of time series data, and averages them along the time axis.
+In this tutorial, we'll create a dataflow that takes a table containing two columns of time series data, and averages them along the time axis.
 
 ## Creating resources
 
-To use tabular data in a datapackage, we need to define a **resource** to contain it.
+To use tabular data in a dataflow, we need to define a **resource** to contain it.
 
-First, reset your datapackage to remove any previous runs and return it to a clean state.
+First, reset your dataflow to remove any previous runs and return it to a clean state.
 
 Then, create files for your new input `data` and output `result` resources under the `helloworld` algorithm folder:
 
@@ -23,18 +23,18 @@ touch helloworld/resources/data.json
 touch helloworld/resources/result.json
 ```
 
-Your datapackage should now look like:
+Your dataflow should now look like:
 
 {/* prettier-ignore */}
 <FileTree>
-- helloworld-datapackage/
+- helloworld-dataflow/
   - helloworld/
     - algorithm.json
     - algorithm.py
     - **resources/**
       - **data.json**
       - **result.json**
-  - datapackage.json
+  - dataflow.json
 </FileTree>
 
 Open up `helloworld/resources/data.json` and write the following resource configuration:
@@ -170,7 +170,7 @@ def main(data):
 
 ## Loading data
 
-By convention, we put any input data files under a directory named `data` at the root of the datapackage. Create the `data` directory, open `data/tabulardata.csv` and paste the following table:
+By convention, we put any input data files under a directory named `data` at the root of the dataflow. Create the `data` directory, open `data/tabulardata.csv` and paste the following table:
 
 ```csv title="data/tabulardata.csv"
 time,y1,y2,y3
@@ -253,4 +253,4 @@ This should return:
 
 Here we've averaged the `y1`, `y2` and `y3` columns together to get the values in `result`.
 
-Next, we'll learn about working with multiple runs in a datapackage.
+Next, we'll learn about working with multiple runs in a dataflow.

@@ -1,16 +1,16 @@
 ---
 title: Tracking with Git
-description: Tracking datapackage runs in a repository
+description: Tracking dataflow runs in a repository
 ---
 
 import { FileTree } from "@astrojs/starlight/components";
 import { Aside } from "@astrojs/starlight/components";
 
-This guide explains how to track datapackage runs in a version control repository using Git.
+This guide explains how to track dataflow runs in a version control repository using Git.
 
-One of the key advantages of using datapackages is the ability to version control your entire analysis process. By tracking these changes with Git, every step of your analysis becomes reproducible and shareable, allowing others with access to your repository to replicate your work.
+One of the key advantages of using dataflows is the ability to version control your entire analysis process. By tracking these changes with Git, every step of your analysis becomes reproducible and shareable, allowing others with access to your repository to replicate your work.
 
-This is a brief introduction for those who are new to Git to get started with tracking datapackage changes.
+This is a brief introduction for those who are new to Git to get started with tracking dataflow changes.
 
 ## Installing Git
 
@@ -18,10 +18,10 @@ Before getting started, you'll need to install Git. Follow the instructions [her
 
 ## Initialising your repository
 
-Once Git is installed, you can initialise your datapackage as a Git repository:
+Once Git is installed, you can initialise your dataflow as a Git repository:
 
 ```bash
-cd helloworld-datapackage       # Navigate to your datapackage root folder
+cd helloworld-dataflow       # Navigate to your dataflow root folder
 git init                        # Initialise a Git repository
 ```
 
@@ -40,11 +40,11 @@ git add --all
 git commit -m "Initial commit"
 ```
 
-Now, all files in your datapackage are tracked. You can revert to this state at any time if needed.
+Now, all files in your dataflow are tracked. You can revert to this state at any time if needed.
 
 ## Tracking changes
 
-After running an analysis in your datapackage, some files will be modified.
+After running an analysis in your dataflow, some files will be modified.
 
 For example, if you run the following commands:
 
@@ -67,7 +67,7 @@ On branch main
 Changes not staged for commit:
   (use "git add <file>..." to update what will be committed)
   (use "git restore <file>..." to discard changes in working directory)
-        modified:   datapackage.json
+        modified:   dataflow.json
 
 Untracked files:
   (use "git add <file>..." to include in what will be committed)
@@ -86,7 +86,7 @@ It's important to commit after each significant run you want to preserve. If you
 
 ## Publishing to GitHub
 
-To share your datapackage or make it available publicly, you can upload your repository to GitHub.
+To share your dataflow or make it available publicly, you can upload your repository to GitHub.
 
 First, create a new repository on GitHub and copy its URL.
 
@@ -102,4 +102,4 @@ Push your changes to GitHub:
 git push origin mian
 ```
 
-Your datapackage is now published to GitHub and can be accessed by others if your repository is set to public.
+Your dataflow is now published to GitHub and can be accessed by others if your repository is set to public.

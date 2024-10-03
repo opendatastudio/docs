@@ -94,11 +94,11 @@ opends set function "median"
 Let's create a new run to find the median of this dataset.
 
 ```bash
-opends reset  # Reset the datapackage to a clean state again
+opends reset  # Reset the dataflow to a clean state again
 opends init helloworld.median
 ```
 
-This command tells the CLI tool that we want to create a new run named `helloworld.median`. `helloworld` specifies the algorithm that we want to use for this run, and `median` is a user-chosen name for the run. The algorithm name before the period must match an algorithm listed in `datapackage.json`. The string following the period can be anything you like.
+This command tells the CLI tool that we want to create a new run named `helloworld.median`. `helloworld` specifies the algorithm that we want to use for this run, and `median` is a user-chosen name for the run. The algorithm name before the period must match an algorithm listed in `dataflow.json`. The string following the period can be anything you like.
 
 You can check which run is currently active by running:
 
@@ -133,11 +133,11 @@ opends show result
 
 ## The run folder structure
 
-Your datapackage should now look like this:
+Your dataflow should now look like this:
 
 {/* prettier-ignore */}
 <FileTree>
-- helloworld-datapackage/
+- helloworld-dataflow/
   - helloworld/
     - algorithm.json
     - algorithm.py
@@ -150,7 +150,7 @@ Your datapackage should now look like this:
       - data.json
       - result.json
     - views/
-  - datapackage.json
+  - dataflow.json
 </FileTree>
 
 As you can see, the resources appear in both the run directory (`helloworld.median.run`) and the algorithm definition directory (`helloworld`).

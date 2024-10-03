@@ -1,16 +1,16 @@
 ---
 title: Hello world!
-description: A very simple datapackage tutorial
+description: A very simple dataflow tutorial
 ---
 
 import { FileTree } from "@astrojs/starlight/components";
 import { Aside } from "@astrojs/starlight/components";
 
-Let's create a simple datapackage to add some numbers together.
+Let's create a simple dataflow to add some numbers together.
 
 <Aside type="tip">
   All of the examples covered in this tutorial are available at our
-  [helloworld-datapackage](https://github.com/opendatastudio/helloworld-datapackage)
+  [helloworld-dataflow](https://github.com/opendatastudio/helloworld-dataflow)
   repository.
 </Aside>
 
@@ -42,47 +42,47 @@ cd python-run-base
 ./build.sh
 ```
 
-## Creating a new datapackage
+## Creating a new dataflow
 
-Let's create a new datapackage. The `opends` CLI tool provides a convenient command to do this:
+Let's create a new dataflow. The `opends` CLI tool provides a convenient command to do this:
 
 ```bash
 opends new helloworld
 ```
 
-This will create a new datapackage inside a directory called `helloworld-datapackage`.
+This will create a new dataflow inside a directory called `helloworld-dataflow`.
 
-This is what your new datapackage should look like:
+This is what your new dataflow should look like:
 
 {/* prettier-ignore */}
 <FileTree>
-- helloworld-datapackage/
+- helloworld-dataflow/
   - helloworld/
     - algorithm.json
     - algorithm.py
-  - datapackage.json
+  - dataflow.json
 </FileTree>
 
-This simple starter datapackage contains an algorithm that takes a single numerical input and multiplies it by 2.
+This simple starter dataflow contains an algorithm that takes a single numerical input and multiplies it by 2.
 
 ## Your first run
 
-Let's run your new datapackage. First, initialise the default run:
+Let's run your new dataflow. First, initialise the default run:
 
 ```bash
-cd helloworld-datapackage
+cd helloworld-dataflow
 opends init
 ```
 
-This will create a directory called `helloworld.run` in the root of your datapackage directory.
+This will create a directory called `helloworld.run` in the root of your dataflow directory.
 
 {/* prettier-ignore */}
 <FileTree>
-- helloworld-datapackage/
+- helloworld-dataflow/
   - helloworld/
   - **helloworld.run/**
     - run.json
-  - datapackage.json
+  - dataflow.json
 </FileTree>
 
 This directory stores all the information about your run so that others can easily reproduce the same analysis. `run.json` stores the run configuration - the input and output values of your analysis and their associated options. This is updated by the CLI every time you execute the run.
@@ -193,7 +193,7 @@ Here you can see the definitons of our two existing variables, the input `x` and
 }
 ```
 
-Save and close `helloworld/algorithm.json`. We will need to initialise the datapackage again to add this new variable to the run configuration:
+Save and close `helloworld/algorithm.json`. We will need to initialise the dataflow again to add this new variable to the run configuration:
 
 ```bash
 opends reset  # This deletes any existing runs

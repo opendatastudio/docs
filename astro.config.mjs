@@ -17,7 +17,7 @@ export default defineConfig({
         {
           label: "Introduction",
           items: [
-            { label: "What are datapackages?", slug: "intro/intro" },
+            { label: "What are dataflows?", slug: "intro/intro" },
             { label: "Hello world!", slug: "intro/helloworld" },
             { label: "Working with tabular data", slug: "intro/tabulardata" },
             { label: "Handling multiple runs", slug: "intro/multipleruns" },

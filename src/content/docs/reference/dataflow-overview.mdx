@@ -1,27 +1,27 @@
 ---
-title: Datapackage overview
-description: Datapackage reference overview
+title: Dataflow overview
+description: Dataflow reference overview
 ---
 
 import { FileTree } from "@astrojs/starlight/components";
 
-## Datapackage structure
+## Dataflow structure
 
-opendata.studio datapackages are based on the open-source [Frictionless Data Package](https://specs.frictionlessdata.io/data-package/) specification.
+opendata.studio dataflows are based on the open-source [Frictionless Data Package](https://specs.frictionlessdata.io/data-package/) specification.
 
-At the most basic level, a datapackage is a git repository consisting of `.json` configuration files describing each element of a data analysis.
+At the most basic level, a dataflow is a git repository consisting of `.json` configuration files describing each element of a data analysis.
 
-We will demonstrate with a simple datapackage containing an IC50 curve fitting algorithm.
+We will demonstrate with a simple dataflow containing an IC50 curve fitting algorithm.
 
-An uninitialised datapackage might look as follows:
+An uninitialised dataflow might look as follows:
 
-opendata.studio datapackages are built on the open-source [Frictionless Data Package](https://specs.frictionlessdata.io/data-package/) specification.
+opendata.studio dataflows are built on the open-source [Frictionless Data Package](https://specs.frictionlessdata.io/data-package/) specification.
 
-A datapackage is a Git repository containing .json configuration files that define each data analysis component.
+A dataflow is a Git repository containing .json configuration files that define each data analysis component.
 
-Let’s look at an example datapackage describing a matrix transformation algorithm.
+Let’s look at an example dataflow describing a matrix transformation algorithm.
 
-Before initialization, the datapackage will look like this:
+Before initialization, the dataflow will look like this:
 
 - simple addition example
 - simple tabular data analysis - average all data in multiple columns
@@ -41,11 +41,11 @@ Before initialization, the datapackage will look like this:
     - **interfaces/**
 </FileTree>
 
-## Basic elements of a datapackage
+## Basic elements of a dataflow
 
 ### Data
 
-Data in a datapackage is described by Frictionless [**resources**](https://specs.frictionlessdata.io/data-resource/).
+Data in a dataflow is described by Frictionless [**resources**](https://specs.frictionlessdata.io/data-resource/).
 
 {/* prettier-ignore */}
 <FileTree>
