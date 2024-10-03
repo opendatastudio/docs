@@ -65,11 +65,12 @@ This tells opendata.studio to use `mycontainer` when executing the `helloworld` 
 
 Next, confirm that the custom container is working by importing `scikit-learn` in your algorithm. Open `helloworld/algorithm.py` and add the import statement:
 
-```python title="helloworld/algorithm.py" ins={1-2}
+```python title="helloworld/algorithm.py" ins={1-2} ins={5}
 import sklearn
 
 def main(data, function):
     """Take the average along the long axis with the specified function"""
+    print(sklearn.__version__)
     return {
         "result": getattr(data, function)(axis=1).to_frame(name="result"),
     }
@@ -86,4 +87,4 @@ opends load data data/tabulardata.csv  # Our algorithm will fail if we forget to
 opends run
 ```
 
-If everything is set up correctly, your algorithm should execute in your custom container without any errors. Congrats - you've successfully executed your algorithm in a custom environment.
+If everything is set up correctly, your algorithm should print the version of `scikit-learn` that you just installed in your custom container. Congrats - you've successfully executed your algorithm in a custom environment.
