@@ -21,7 +21,7 @@ export default defineConfig({
             { label: "Hello world!", slug: "intro/helloworld" },
             { label: "Working with tabular data", slug: "intro/tabulardata" },
             { label: "Handling multiple runs", slug: "intro/multipleruns" },
-            { label: "Tracking with git", slug: "intro/repositories" },
+            { label: "Tracking with Git", slug: "intro/repositories" },
             {
               label: "Using custom Docker containers",
               slug: "intro/containers",
