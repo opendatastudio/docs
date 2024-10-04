@@ -8,17 +8,19 @@ analysis in a reusable and reproducible format.
 
 A dataflow contains:
 
-- algorithm configuration associated with a data analysis
-- run state saved on algorithm runs
+- The analysis algorithm and its execution environment
+- Input and output data, along with configurable options
+- Saved run states from algorithm executions
+- User interface definitions
 
-How this is realised is through the following data structures:
+These elements are defined by individual components inside each dataflow:
 
-- **resources**: store tabular and parameter data
-- **algorithms** and **containers**: describe algorithm code with the run
-  context
-- **views**: visualise data
-- **interfaces**: construct user interfaces for the web application and
-  embeddable widgets
+- **resources**: Store tabular data
+- **algorithms** and **containers**: Define the algorithm code and execution
+  environment
+- **views**: Visualise data (e.g.: graphs)
+- **interfaces**: Describe user interfaces for the analysis, rendered through
+  web components
 
 These elements form a complete description of a data analysis that can be
 executed through our web interface or
@@ -27,5 +29,5 @@ tracked, creating a reproducible record of the analysis process. Once an
 analysis is completed, the results and process can be easily shared or
 published, ensuring transparency and allowing others to build upon your work.
 
-To begin with, let's create a simple dataflow containing an algorithm that adds
-two numbers together.
+This tutorial will introduce you to working with dataflows. To begin with, let's
+create a simple dataflow containing an algorithm that adds two numbers together.

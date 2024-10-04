@@ -15,7 +15,7 @@ export default defineConfig({
       },
       sidebar: [
         {
-          label: "Introduction",
+          label: "Introduction to dataflows",
           items: [
             { label: "What are dataflows?", slug: "intro/intro" },
             { label: "Hello world!", slug: "intro/helloworld" },
@@ -26,9 +26,21 @@ export default defineConfig({
               label: "Using custom Docker containers",
               slug: "intro/containers",
             },
-            { label: "Using relationships", slug: "intro/relationships" },
-            { label: "Using metaschemas", slug: "intro/metaschemas" },
           ],
+        },
+        {
+          label: "Advanced tutorials",
+          items: [
+            {
+              label: "Creating a model fitting dataflow",
+              slug: "advanced/modelfit",
+            },
+            { label: "Using metaschemas", slug: "advanced/metaschemas" },
+          ],
+        },
+        {
+          label: "Views and interfaces",
+          autogenerate: { directory: "views" },
         },
         {
           label: "Reference",

@@ -8,7 +8,7 @@ hero:
   #   file: ../../assets/logo_dark.svg
   actions:
     - text: Introduction to dataflows
-      link: /intro/helloworld/
+      link: /intro/intro/
       icon: right-arrow
     - text: The opendata.studio project
       link: https://opendata.studio
