@@ -14,12 +14,12 @@ Let's say you need to use the scikit-learn library, which isn't included in pyth
 
 ```bash
 mkdir helloworld/container
-touch helloworld/Dockerfile
+touch helloworld/container/Dockerfile
 ```
 
 Inside the Dockerfile, write the following container definition:
 
-```docker title="helloworld/Dockerfile"
+```docker title="helloworld/container/Dockerfile"
 FROM opends/python-run-base:v1
 
 RUN pip install scikit-learn
