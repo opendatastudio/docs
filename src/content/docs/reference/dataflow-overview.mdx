@@ -7,17 +7,24 @@ import { FileTree } from "@astrojs/starlight/components";
 
 ## Dataflow structure
 
-opendata.studio dataflows are based on the open-source [Frictionless Data Package](https://specs.frictionlessdata.io/data-package/) specification.
+opendata.studio dataflows are based on the open-source
+[Frictionless Data Package](https://specs.frictionlessdata.io/data-package/)
+specification.
 
-At the most basic level, a dataflow is a git repository consisting of `.json` configuration files describing each element of a data analysis.
+At the most basic level, a dataflow is a git repository consisting of `.json`
+configuration files describing each element of a data analysis.
 
-We will demonstrate with a simple dataflow containing an IC50 curve fitting algorithm.
+We will demonstrate with a simple dataflow containing an IC50 curve fitting
+algorithm.
 
 An uninitialised dataflow might look as follows:
 
-opendata.studio dataflows are built on the open-source [Frictionless Data Package](https://specs.frictionlessdata.io/data-package/) specification.
+opendata.studio dataflows are built on the open-source
+[Frictionless Data Package](https://specs.frictionlessdata.io/data-package/)
+specification.
 
-A dataflow is a Git repository containing .json configuration files that define each data analysis component.
+A dataflow is a Git repository containing .json configuration files that define
+each data analysis component.
 
 Let’s look at an example dataflow describing a matrix transformation algorithm.
 
@@ -45,7 +52,8 @@ Before initialization, the dataflow will look like this:
 
 ### Data
 
-Data in a dataflow is described by Frictionless [**resources**](https://specs.frictionlessdata.io/data-resource/).
+Data in a dataflow is described by Frictionless
+[**resources**](https://specs.frictionlessdata.io/data-resource/).
 
 {/* prettier-ignore */}
 <FileTree>
@@ -60,7 +68,9 @@ Data in a dataflow is described by Frictionless [**resources**](https://specs.fr
 
 ##### Tabular data
 
-Tabular data is described by the Frictionless [Tabular Data Resource](https://specs.frictionlessdata.io/tabular-data-resource/) specification.
+Tabular data is described by the Frictionless
+[Tabular Data Resource](https://specs.frictionlessdata.io/tabular-data-resource/)
+specification.
 
 ##### Parameter data
 
@@ -68,7 +78,9 @@ Parameter data is described by a modified Tabular Data Resource specification.
 
 ### Analysis
 
-Analysis code is defined by **algorithms**, the **schemas** their inputs and outputs must conform to, and the **containers** they execute in. _Configurations_ describe how to execute the algorithm.
+Analysis code is defined by **algorithms**, the **schemas** their inputs and
+outputs must conform to, and the **containers** they execute in.
+_Configurations_ describe how to execute the algorithm.
 
 {/* prettier-ignore */}
 <FileTree>
@@ -91,25 +103,35 @@ Analysis code is defined by **algorithms**, the **schemas** their inputs and out
 
 Algorithms describe the analysis code.
 
-All algorithms have a `signature`. The algorithm `signature` defines the inputs and outputs that the algorithm can take. A signature consists of many _arguments_.
+All algorithms have a `signature`. The algorithm `signature` defines the inputs
+and outputs that the algorithm can take. A signature consists of many
+_arguments_.
 
-Note: we are using the word _argument_ here to refer to both inputs and outputs here for brevity.
+Note: we are using the word _argument_ here to refer to both inputs and outputs
+here for brevity.
 
 ##### Schemas
 
-Schemas describe the format that algorithm input and output resources are allowed to take. For example:
+Schemas describe the format that algorithm input and output resources are
+allowed to take. For example:
 
 #### Configurations
 
-**Configurations** describe how to execute the algorithm they refer to. They contain a description of the setup of a single algorithm run, linking algorithm arguments to input and output resources along with the schemas they must conform to.
+**Configurations** describe how to execute the algorithm they refer to. They
+contain a description of the setup of a single algorithm run, linking algorithm
+arguments to input and output resources along with the schemas they must conform
+to.
 
-Configurations describe a specific configuration of inputs and outputs for a single algorithm run.
+Configurations describe a specific configuration of inputs and outputs for a
+single algorithm run.
 
-Configurations describe the setup of a single `algorithm` run, including input and output `resources` and what `schemas` they must conform to.
+Configurations describe the setup of a single `algorithm` run, including input
+and output `resources` and what `schemas` they must conform to.
 
 ### Visualisation
 
-Visualisations are described by **views** which can be rendered individually or as part of interactive **interfaces**.
+Visualisations are described by **views** which can be rendered individually or
+as part of interactive **interfaces**.
 
 {/* prettier-ignore */}
 <FileTree>
@@ -126,4 +148,5 @@ Visualisations are described by **views** which can be rendered individually or 
 
 #### Interfaces
 
-_Interfaces_ describe how to render a collection of views into an interactive user interface.
+_Interfaces_ describe how to render a collection of views into an interactive
+user interface.

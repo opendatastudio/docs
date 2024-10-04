@@ -6,13 +6,18 @@ description: Handling multiple runs
 import { FileTree } from "@astrojs/starlight/components";
 import { Aside } from "@astrojs/starlight/components";
 
-Say you want to compare the results of two different analyses on the same set of data. To do this, you can create a separate run for each analysis.
+Say you want to compare the results of two different analyses on the same set of
+data. To do this, you can create a separate run for each analysis.
 
-In this tutorial, we'll first modify our algorithm to calculate either the median or the mean of the input dataset. We'll then create two runs - one to calculate the median, and one the mean. This allows us to record and compare the output of the two analyses.
+In this tutorial, we'll first modify our algorithm to calculate either the
+median or the mean of the input dataset. We'll then create two runs - one to
+calculate the median, and one the mean. This allows us to record and compare the
+output of the two analyses.
 
 ## Modifying the algorithm
 
-First, let's modify our algorithm to give us the option of calculating a median instead of a mean.
+First, let's modify our algorithm to give us the option of calculating a median
+instead of a mean.
 
 Modify `helloworld/algorithm.py`:
 
@@ -67,7 +72,8 @@ Now wire up the new `function` argument to an input in `algorithm.json`:
 }
 ```
 
-Here we're adding a simple input that takes a string, and specifying that it can take only two valid values: `mean` and `median` with the `enum` property.
+Here we're adding a simple input that takes a string, and specifying that it can
+take only two valid values: `mean` and `median` with the `enum` property.
 
 To see how this works, we can try and set our new input to the wrong value:
 
@@ -98,7 +104,11 @@ opends reset  # Reset the dataflow to a clean state again
 opends init helloworld.median
 ```
 
-This command tells the CLI tool that we want to create a new run named `helloworld.median`. `helloworld` specifies the algorithm that we want to use for this run, and `median` is a user-chosen name for the run. The algorithm name before the period must match an algorithm listed in `dataflow.json`. The string following the period can be anything you like.
+This command tells the CLI tool that we want to create a new run named
+`helloworld.median`. `helloworld` specifies the algorithm that we want to use
+for this run, and `median` is a user-chosen name for the run. The algorithm name
+before the period must match an algorithm listed in `dataflow.json`. The string
+following the period can be anything you like.
 
 You can check which run is currently active by running:
 
@@ -153,25 +163,34 @@ Your dataflow should now look like this:
   - dataflow.json
 </FileTree>
 
-As you can see, the resources appear in both the run directory (`helloworld.median.run`) and the algorithm definition directory (`helloworld`).
+As you can see, the resources appear in both the run directory
+(`helloworld.median.run`) and the algorithm definition directory (`helloworld`).
 
-The resources inside the algorithm definition directory serve as templates from which to generate the resources for a run.
+The resources inside the algorithm definition directory serve as templates from
+which to generate the resources for a run.
 
-The resources inside the run directory represent the actual inputs and outputs that are recorded in the course of running an algorithm.
+The resources inside the run directory represent the actual inputs and outputs
+that are recorded in the course of running an algorithm.
 
-Additionally, `run.json` records the values of any single value variable during a run (such as our new input variable - `function`).
+Additionally, `run.json` records the values of any single value variable during
+a run (such as our new input variable - `function`).
 
-In this way, a run folder contains a complete description of the state of a single execution of the algorithm. This state can then be tracked in a version control repository to maintain a history of the analysis performed. This is covered in the next topic.
+In this way, a run folder contains a complete description of the state of a
+single execution of the algorithm. This state can then be tracked in a version
+control repository to maintain a history of the analysis performed. This is
+covered in the next topic.
 
 ## Creating a second run
 
-Now, say we want to calculate the mean of the same dataset without losing our previous result. To do this, we can create a new named run:
+Now, say we want to calculate the mean of the same dataset without losing our
+previous result. To do this, we can create a new named run:
 
 ```bash
 opends init helloworld.mean
 ```
 
-Now we can load our input data, and set the function we want to use to calculate the result:
+Now we can load our input data, and set the function we want to use to calculate
+the result:
 
 ```bash
 opends load data data/tabulardata.csv
@@ -193,7 +212,8 @@ opends show result
 | 4    | 4.06375  |
 | ...  | ...      |
 
-Now, since we saved the result of our previous run in `helloworld.median`, we can easily compare the two results:
+Now, since we saved the result of our previous run in `helloworld.median`, we
+can easily compare the two results:
 
 ```bash
 opends set-run helloworld.median

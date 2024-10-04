@@ -6,15 +6,21 @@ description: Tracking dataflow runs in a repository
 import { FileTree } from "@astrojs/starlight/components";
 import { Aside } from "@astrojs/starlight/components";
 
-This guide explains how to track dataflow runs in a version control repository using Git.
+This guide explains how to track dataflow runs in a version control repository
+using Git.
 
-One of the key advantages of using dataflows is the ability to version control your entire analysis process. By tracking these changes with Git, every step of your analysis becomes reproducible and shareable, allowing others with access to your repository to replicate your work.
+One of the key advantages of using dataflows is the ability to version control
+your entire analysis process. By tracking these changes with Git, every step of
+your analysis becomes reproducible and shareable, allowing others with access to
+your repository to replicate your work.
 
-This is a brief introduction for those who are new to Git to get started with tracking dataflow changes.
+This is a brief introduction for those who are new to Git to get started with
+tracking dataflow changes.
 
 ## Installing Git
 
-Before getting started, you'll need to install Git. Follow the instructions [here](https://github.com/git-guides/install-git) for your operating system.
+Before getting started, you'll need to install Git. Follow the instructions
+[here](https://github.com/git-guides/install-git) for your operating system.
 
 ## Initialising your repository
 
@@ -31,7 +37,8 @@ Now we can check the status of your repository:
 git status
 ```
 
-You should see a list of "untracked files" - these are files Git is not yet monitoring for changes.
+You should see a list of "untracked files" - these are files Git is not yet
+monitoring for changes.
 
 Let's add and commit all files to start tracking them:
 
@@ -40,7 +47,8 @@ git add --all
 git commit -m "Initial commit"
 ```
 
-Now, all files in your dataflow are tracked. You can revert to this state at any time if needed.
+Now, all files in your dataflow are tracked. You can revert to this state at any
+time if needed.
 
 ## Tracking changes
 
@@ -76,17 +84,21 @@ Untracked files:
 no changes added to commit (use "git add" and/or "git commit -a")
 ```
 
-Git has noticed changes, but they haven’t been committed yet. To save these changes, use:
+Git has noticed changes, but they haven’t been committed yet. To save these
+changes, use:
 
 ```bash
 git commit -am "Put a description of your run here"
 ```
 
-It's important to commit after each significant run you want to preserve. If you don’t, your changes may not be saved and could be overwritten by subsequent runs.
+It's important to commit after each significant run you want to preserve. If you
+don’t, your changes may not be saved and could be overwritten by subsequent
+runs.
 
 ## Publishing to GitHub
 
-To share your dataflow or make it available publicly, you can upload your repository to GitHub.
+To share your dataflow or make it available publicly, you can upload your
+repository to GitHub.
 
 First, create a new repository on GitHub and copy its URL.
 
@@ -102,4 +114,5 @@ Push your changes to GitHub:
 git push origin mian
 ```
 
-Your dataflow is now published to GitHub and can be accessed by others if your repository is set to public.
+Your dataflow is now published to GitHub and can be accessed by others if your
+repository is set to public.

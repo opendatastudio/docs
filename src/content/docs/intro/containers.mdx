@@ -6,11 +6,16 @@ description: Using custom Docker containers with dataflows
 import { FileTree } from "@astrojs/starlight/components";
 import { Aside } from "@astrojs/starlight/components";
 
-By default, algorithms in opendata.studio run in the python-run-base Docker container, which provides commonly used libraries such as `numpy` and `pandas`. If you need a library not included in this default container, you can easily create a custom Docker container to run your algorithm.
+By default, algorithms in opendata.studio run in the python-run-base Docker
+container, which provides commonly used libraries such as `numpy` and `pandas`.
+If you need a library not included in this default container, you can easily
+create a custom Docker container to run your algorithm.
 
 ## Creating a custom Docker container
 
-Let's say you need to use the scikit-learn library, which isn't included in python-run-base. To do this, you can create a custom container within the `helloworld` algorithm configuration directory:
+Let's say you need to use the scikit-learn library, which isn't included in
+python-run-base. To do this, you can create a custom container within the
+`helloworld` algorithm configuration directory:
 
 ```bash
 mkdir helloworld/container
@@ -25,7 +30,8 @@ FROM opends/python-run-base:v1
 RUN pip install scikit-learn
 ```
 
-This container definition uses `python-run-base` as the base image and installs `scikit-learn` on top.
+This container definition uses `python-run-base` as the base image and installs
+`scikit-learn` on top.
 
 ## Building your container
 
@@ -39,7 +45,8 @@ This command creates your new container with the tag `mycontainer`.
 
 ## Updating the algorithm configuration
 
-To use this custom container, you'll need to specify it in your algorithm's configuration file:
+To use this custom container, you'll need to specify it in your algorithm's
+configuration file:
 
 Edit the algorithm.json file to point to your new container:
 
@@ -59,11 +66,13 @@ Edit the algorithm.json file to point to your new container:
 }
 ```
 
-This tells opendata.studio to use `mycontainer` when executing the `helloworld` algorithm.
+This tells opendata.studio to use `mycontainer` when executing the `helloworld`
+algorithm.
 
 ## Importing our new dependency
 
-Next, confirm that the custom container is working by importing `scikit-learn` in your algorithm. Open `helloworld/algorithm.py` and add the import statement:
+Next, confirm that the custom container is working by importing `scikit-learn`
+in your algorithm. Open `helloworld/algorithm.py` and add the import statement:
 
 ```python title="helloworld/algorithm.py" ins={1-2} ins={5}
 import sklearn
@@ -87,4 +96,6 @@ opends load data data/tabulardata.csv  # Our algorithm will fail if we forget to
 opends run
 ```
 
-If everything is set up correctly, your algorithm should print the version of `scikit-learn` that you just installed in your custom container. Congrats - you've successfully executed your algorithm in a custom environment.
+If everything is set up correctly, your algorithm should print the version of
+`scikit-learn` that you just installed in your custom container. Congrats -
+you've successfully executed your algorithm in a custom environment.

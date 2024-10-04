@@ -6,15 +6,19 @@ description: Working with tabular data resources in a dataflow
 import { FileTree } from "@astrojs/starlight/components";
 import { Aside } from "@astrojs/starlight/components";
 
-In this tutorial, we'll create a dataflow that takes a table containing two columns of time series data, and averages them along the time axis.
+In this tutorial, we'll create a dataflow that takes a table containing two
+columns of time series data, and averages them along the time axis.
 
 ## Creating resources
 
-To use tabular data in a dataflow, we need to define a **resource** to contain it.
+To use tabular data in a dataflow, we need to define a **resource** to contain
+it.
 
-First, reset your dataflow to remove any previous runs and return it to a clean state.
+First, reset your dataflow to remove any previous runs and return it to a clean
+state.
 
-Then, create files for your new input `data` and output `result` resources under the `helloworld` algorithm folder:
+Then, create files for your new input `data` and output `result` resources under
+the `helloworld` algorithm folder:
 
 ```bash
 opends reset
@@ -37,7 +41,8 @@ Your dataflow should now look like:
   - dataflow.json
 </FileTree>
 
-Open up `helloworld/resources/data.json` and write the following resource configuration:
+Open up `helloworld/resources/data.json` and write the following resource
+configuration:
 
 ```json title="helloworld/resources/data.json"
 {
@@ -78,7 +83,8 @@ Open up `helloworld/resources/data.json` and write the following resource config
 }
 ```
 
-This file defines an empty tabular data resource that has four numerical columns: `time`, `y1`, `y2` and `y3`.
+This file defines an empty tabular data resource that has four numerical
+columns: `time`, `y1`, `y2` and `y3`.
 
 Now define the output `result` resource:
 
@@ -117,7 +123,10 @@ Now define the output `result` resource:
 
 ## Linking resources to inputs and outputs
 
-In order for our algorithm to have access to our newly minted resources, we need to link them to its input and output variables. Open up `helloworld/algorithm.json` and modify its inputs and output configurations like so:
+In order for our algorithm to have access to our newly minted resources, we need
+to link them to its input and output variables. Open up
+`helloworld/algorithm.json` and modify its inputs and output configurations like
+so:
 
 ```json title="helloworld/algorithm.json" ins={6-16} ins={19-29}
 {
@@ -154,11 +163,17 @@ In order for our algorithm to have access to our newly minted resources, we need
 }
 ```
 
-This tells our algorithm that the input `data` should be a tabular data resource that conforms to the schema we defined in `helloworld/resources/data.json`. In other words, we expect a table with four columns named `time`, `y1`, `y2` and `y3`. Similarly, the output should be a table with two columns: `time` and `result`.
+This tells our algorithm that the input `data` should be a tabular data resource
+that conforms to the schema we defined in `helloworld/resources/data.json`. In
+other words, we expect a table with four columns named `time`, `y1`, `y2` and
+`y3`. Similarly, the output should be a table with two columns: `time` and
+`result`.
 
 ## Modifying the algorithm
 
-Finally, we can modify our algorithm to take the input data and use it to calculate the average Y values. Note that by default, tabular data resources are passed to the algorithm as named pandas DataFrames.
+Finally, we can modify our algorithm to take the input data and use it to
+calculate the average Y values. Note that by default, tabular data resources are
+passed to the algorithm as named pandas DataFrames.
 
 ```python title="helloworld/algorithm.py"
 def main(data):
@@ -170,7 +185,9 @@ def main(data):
 
 ## Loading data
 
-By convention, we put any input data files under a directory named `data` at the root of the dataflow. Create the `data` directory, open `data/tabulardata.csv` and paste the following table:
+By convention, we put any input data files under a directory named `data` at the
+root of the dataflow. Create the `data` directory, open `data/tabulardata.csv`
+and paste the following table:
 
 ```csv title="data/tabulardata.csv"
 time,y1,y2,y3
@@ -196,7 +213,8 @@ time,y1,y2,y3
 19,20.825401723837388,18.37126725210334,24.895029343034434
 ```
 
-Now we can load our data to be analysed. As always, first we need to initialise a new run:
+Now we can load our data to be analysed. As always, first we need to initialise
+a new run:
 
 ```bash
 opends init
@@ -251,6 +269,7 @@ This should return:
 | 4    | 4.06375  |
 | ...  | ...      |
 
-Here we've averaged the `y1`, `y2` and `y3` columns together to get the values in `result`.
+Here we've averaged the `y1`, `y2` and `y3` columns together to get the values
+in `result`.
 
 Next, we'll learn about working with multiple runs in a dataflow.

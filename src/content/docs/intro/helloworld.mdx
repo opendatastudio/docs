@@ -25,7 +25,8 @@ python --version  # Ensure you have a Python version >= 3.11 installed
 pip install opendatacli
 ```
 
-If everything is working, you should see the following output followed by a help message when you type `opends`:
+If everything is working, you should see the following output followed by a help
+message when you type `opends`:
 
 ```bash
 # Usage: opends [OPTIONS] COMMAND [ARGS]...
@@ -34,7 +35,8 @@ If everything is working, you should see the following output followed by a help
 
 ### Building the default execution container
 
-This only needs to be done once. In the future, this container will be available on DockerHub to download and you can skip this step.
+This only needs to be done once. In the future, this container will be available
+on DockerHub to download and you can skip this step.
 
 ```bash
 git clone https://github.com/opendatastudio/python-run-base
@@ -44,7 +46,8 @@ cd python-run-base
 
 ## Creating a new dataflow
 
-Let's create a new dataflow. The `opends` CLI tool provides a convenient command to do this:
+Let's create a new dataflow. The `opends` CLI tool provides a convenient command
+to do this:
 
 ```bash
 opends new helloworld
@@ -63,7 +66,8 @@ This is what your new dataflow should look like:
   - dataflow.json
 </FileTree>
 
-This simple starter dataflow contains an algorithm that takes a single numerical input and multiplies it by 2.
+This simple starter dataflow contains an algorithm that takes a single numerical
+input and multiplies it by 2.
 
 ## Your first run
 
@@ -74,7 +78,8 @@ cd helloworld-dataflow
 opends init
 ```
 
-This will create a directory called `helloworld.run` in the root of your dataflow directory.
+This will create a directory called `helloworld.run` in the root of your
+dataflow directory.
 
 {/* prettier-ignore */}
 <FileTree>
@@ -85,9 +90,13 @@ This will create a directory called `helloworld.run` in the root of your dataflo
   - dataflow.json
 </FileTree>
 
-This directory stores all the information about your run so that others can easily reproduce the same analysis. `run.json` stores the run configuration - the input and output values of your analysis and their associated options. This is updated by the CLI every time you execute the run.
+This directory stores all the information about your run so that others can
+easily reproduce the same analysis. `run.json` stores the run configuration -
+the input and output values of your analysis and their associated options. This
+is updated by the CLI every time you execute the run.
 
-By default, the input variable `x` is set to the default value specified in `algorithm.json`. You can set the value of `x` to something else if you'd like:
+By default, the input variable `x` is set to the default value specified in
+`algorithm.json`. You can set the value of `x` to something else if you'd like:
 
 ```bash
 opends set x 9001
@@ -113,7 +122,8 @@ opends show result
 # ╰──────────╯
 ```
 
-Our algorithm took the value of input variable `x`, 42, multiplied it by 2 to get 84, and stored the resulting value in the `result` variable.
+Our algorithm took the value of input variable `x`, 42, multiplied it by 2 to
+get 84, and stored the resulting value in the `result` variable.
 
 ## Adding an input
 
@@ -157,7 +167,9 @@ First, open up `helloworld/algorithm.json`:
 }
 ```
 
-Here you can see the definitons of our two existing variables, the input `x` and the output `result`. To add a second input variable, we need to add another input definition to the `inputs` list:
+Here you can see the definitons of our two existing variables, the input `x` and
+the output `result`. To add a second input variable, we need to add another
+input definition to the `inputs` list:
 
 ```json title="helloworld/algorithm.json" ins={16-25}
 {
@@ -193,7 +205,8 @@ Here you can see the definitons of our two existing variables, the input `x` and
 }
 ```
 
-Save and close `helloworld/algorithm.json`. We will need to initialise the dataflow again to add this new variable to the run configuration:
+Save and close `helloworld/algorithm.json`. We will need to initialise the
+dataflow again to add this new variable to the run configuration:
 
 ```bash
 opends reset  # This deletes any existing runs
@@ -237,6 +250,7 @@ opends show result
 # ╰──────────╯
 ```
 
-Our algorithm added the values of `x` and `y` together to get 242 and stored this result in the `helloworld.run` run configuration.
+Our algorithm added the values of `x` and `y` together to get 242 and stored
+this result in the `helloworld.run` run configuration.
 
 Next, we will learn how to work with tabular data through `resources`.
