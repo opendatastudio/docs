@@ -3,6 +3,7 @@ import starlight from "@astrojs/starlight";
 
 // https://astro.build/config
 export default defineConfig({
+  site: "https://docs.opendata.studio",
   integrations: [
     starlight({
       title: "opendata.studio docs",
