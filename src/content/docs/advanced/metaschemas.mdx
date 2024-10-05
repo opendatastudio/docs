@@ -6,4 +6,281 @@ description: An introduction to using resource metaschemas
 import { FileTree } from "@astrojs/starlight/components";
 import { Aside } from "@astrojs/starlight/components";
 
-Resource metaschemas describe the shape a resource's schema can take.
+Sometimes, we need to accept tabular data without knowing its exact schema
+beforehand. For instance, we may want to allow an input dataset with one X
+column and an unknown number of Y columns.
+
+To handle this, we can use metaschema definitions. Metaschemas describe the
+allowable structure of a tabular data resource.
+
+In this tutorial, we'll build on the dataflow from the
+[tabular data tutorial](/intro/tabulardata). You can find it in the
+[helloworld-dataflow](https://github.com/opendatastudio/helloworld-dataflow)
+repository, under the
+["tabulardata" algorithm folder](https://github.com/opendatastudio/helloworld-dataflow/tree/main/tabulardata).
+
+## Algorithm overview
+
+The `tabulardata` algorithm takes an input dataset with 4 columns - `x`, `y1`,
+`y2` and `y3`, and returns its mean along the x axis.
+
+However, the algorithm function itself is able to take an input dataset with any
+number of input `y` columns:
+
+```python title="helloworld/algorithmpy"
+def main(data):
+    """Take the average of the input data along the long axis"""
+    return {
+        "result": data.mean(axis=1).to_frame(name="result"),
+    }
+```
+
+How can we modify our algorithm configuration to allow for any shape of input
+data?
+
+## Creating the metaschema
+
+We can do this by defining a new metaschema for our input tabular data resource.
+
+First, create a metaschemas folder in the algorithm configuration directory:
+
+```bash
+mkdir tabulardata/metaschemas
+```
+
+Now create a metaschema for our input data named
+`tabulardata/metaschemas/data.json`:
+
+```json title="tabulardata/metaschemas/data.json"
+{
+  "name": "data",
+  "title": "Metaschema for input data",
+  "profile": "opends-metaschema",
+  "schema": {
+    "primaryKey": "time",
+    "fields": [
+      {
+        "name": "time",
+        "title": "Time",
+        "unit": "",
+        "type": "number",
+        "index": "0"
+      },
+      {
+        "name": "y",
+        "title": "Y",
+        "unit": "",
+        "type": "number",
+        "index": "1:"
+      }
+    ]
+  }
+}
+```
+
+This metaschema matches any tabular data with a single `time` column, and any
+number of `y` columns following it.
+
+Metaschemas are identical to tabular data schemas in syntax, with the addition
+of an `index` property that specifies the columns that each field applies to. In
+this case, the index `1:` on the `y` field specifies that this field applies to
+every column after the first column.
+
+## Applying the metaschema
+
+In order to apply this metaschema to our `data` input resource, we need to
+specify it in the algorithm configuration.
+
+Edit `tabulardata/algorithm.json`:
+
+```json title="tabulardata/algorithm.json" ins={16-18,22}
+{
+  "name": "tabulardata",
+  "title": "Time series average",
+  "description": "A simple algorithm that takes a time series input table and averages its values on the time axis",
+  "profile": "opends-algorithm",
+  "code": "algorithm.py",
+  "container": "opends/python-run-base:v1",
+  "signature": {
+    "inputs": [
+      {
+        "name": "data",
+        "title": "Data",
+        "description": "Input time series",
+        "type": "resource",
+        "profile": "tabular-data-resource",
+        "metaschemas": ["data"],
+        "null": false,
+        "default": {
+          "resource": "data",
+          "metaschema": "data"
+        }
+      }
+    ],
+    "outputs": [
+      {
+        "name": "result",
+        "title": "Result",
+        "description": "Averaged result",
+        "type": "resource",
+        "profile": "tabular-data-resource",
+        "null": true,
+        "default": {
+          "resource": "result"
+        }
+      }
+    ]
+  }
+}
+```
+
+The first `metaschemas` key specifies all of the allowable metaschemas for this
+variable. In this case, we only have one.
+
+The second `metaschema` key inside the `default` object specifies the default
+metaschema to use when running the algorithm.
+
+## Modifying the `data` resource
+
+Finally, we need to modify the data resource to remove its schema rules. The
+metaschema will automatically generate its schema for us when the user loads
+their data.
+
+Open up `tabulardata/resources/data.json` and replace its schema with an empty
+object:
+
+```json title="tabulardata/resources/data.json" ins={6}
+{
+  "name": "data",
+  "title": "Data",
+  "description": "Time series data",
+  "profile": "tabular-data-resource",
+  "schema": {},
+  "data": []
+}
+```
+
+## Loading data
+
+Let's test our algorithm by loading some data with 6 y columns. Save the
+following in `data/tabulardata2.csv`:
+
+```csv
+time,y0,y1,y2,y3,y4,y5
+0,1,2,3,4,5,6
+1,7,8,9,10,11,12
+2,13,14,15,16,17,18
+```
+
+Initialise and load it into our algorithm:
+
+```bash
+opends reset  # Remember to reset to remove any previous runs of our algorithm
+opends init
+opends load data data/tabulardata2.csv
+```
+
+Check it loaded correctly:
+
+```bash
+opends show data
+```
+
+```
+╭────────┬──────┬──────┬──────┬──────┬──────┬──────╮
+│   time │   y0 │   y1 │   y2 │   y3 │   y4 │   y5 │
+├────────┼──────┼──────┼──────┼──────┼──────┼──────┤
+│      0 │    1 │    2 │    3 │    4 │    5 │    6 │
+├────────┼──────┼──────┼──────┼──────┼──────┼──────┤
+│      1 │    7 │    8 │    9 │   10 │   11 │   12 │
+├────────┼──────┼──────┼──────┼──────┼──────┼──────┤
+│      2 │   13 │   14 │   15 │   16 │   17 │   18 │
+╰────────┴──────┴──────┴──────┴──────┴──────┴──────╯
+```
+
+Open up `tabulardata.run/resources/data.json` to see your new input data's
+generated schema:
+
+```json title="tabulardata.run/resources/data.json"
+  ...
+  "schema": {
+    "fields": [
+      {
+        "name": "time",
+        "title": "time",
+        "unit": "",
+        "type": "number"
+      },
+      {
+        "name": "y0",
+        "title": "y0",
+        "unit": "",
+        "type": "number"
+      },
+      {
+        "name": "y1",
+        "title": "y1",
+        "unit": "",
+        "type": "number"
+      },
+      {
+        "name": "y2",
+        "title": "y2",
+        "unit": "",
+        "type": "number"
+      },
+      {
+        "name": "y3",
+        "title": "y3",
+        "unit": "",
+        "type": "number"
+      },
+      {
+        "name": "y4",
+        "title": "y4",
+        "unit": "",
+        "type": "number"
+      },
+      {
+        "name": "y5",
+        "title": "y5",
+        "unit": "",
+        "type": "number"
+      }
+    ],
+    "primaryKey": "time"
+  }
+  ...
+```
+
+Using the metaschema, the dataflow has automatically generated a 7-column schema
+for this dataset.
+
+## Executing the algorithm
+
+To check everything is working correctly, we can execute the algorithm:
+
+```bash
+opends run
+```
+
+And check our result:
+
+```bash
+opends show result
+```
+
+```
+╭────────┬──────────╮
+│   time │   result │
+├────────┼──────────┤
+│      0 │      3.5 │
+├────────┼──────────┤
+│      1 │      9.5 │
+├────────┼──────────┤
+│      2 │     15.5 │
+╰────────┴──────────╯
+```
+
+Now you know how to handle dynamic input datasets by using metaschemas in a
+dataflow.
