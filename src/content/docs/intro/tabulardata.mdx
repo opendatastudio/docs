@@ -1,20 +1,20 @@
 ---
 title: Working with tabular data
-description: Working with tabular data resources in a dataflow
+description: Working with tabular data resources in a datakit
 ---
 
 import { FileTree } from "@astrojs/starlight/components";
 import { Aside } from "@astrojs/starlight/components";
 
-In this tutorial, we'll create a dataflow that takes a table containing two
+In this tutorial, we'll create a datakit that takes a table containing two
 columns of time series data, and averages them along the time axis.
 
 ## Creating resources
 
-To use tabular data in a dataflow, we need to define a **resource** to contain
+To use tabular data in a datakit, we need to define a **resource** to contain
 it.
 
-First, reset your dataflow to remove any previous runs and return it to a clean
+First, reset your datakit to remove any previous runs and return it to a clean
 state.
 
 Then, create files for your new input `data` and output `result` resources under
@@ -27,18 +27,18 @@ touch helloworld/resources/data.json
 touch helloworld/resources/result.json
 ```
 
-Your dataflow should now look like:
+Your datakit should now look like:
 
 {/* prettier-ignore */}
 <FileTree>
-- helloworld-dataflow/
+- helloworld-datakit/
   - helloworld/
     - algorithm.json
     - algorithm.py
     - **resources/**
       - **data.json**
       - **result.json**
-  - dataflow.json
+  - datakit.json
 </FileTree>
 
 Open up `helloworld/resources/data.json` and write the following resource
@@ -186,7 +186,7 @@ def main(data):
 ## Loading data
 
 By convention, we put any input data files under a directory named `data` at the
-root of the dataflow. Create the `data` directory, open `data/tabulardata.csv`
+root of the datakit. Create the `data` directory, open `data/tabulardata.csv`
 and paste the following table:
 
 ```csv title="data/tabulardata.csv"
@@ -272,4 +272,4 @@ This should return:
 Here we've averaged the `y1`, `y2` and `y3` columns together to get the values
 in `result`.
 
-Next, we'll learn about working with multiple runs in a dataflow.
+Next, we'll learn about working with multiple runs in a datakit.

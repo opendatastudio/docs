@@ -1,6 +1,6 @@
 ---
-title: Creating a model fitting dataflow
-description: Creating a model fitting dataflow
+title: Creating a model fitting datakit
+description: Creating a model fitting datakit
 ---
 
 import { FileTree } from "@astrojs/starlight/components";
@@ -10,25 +10,25 @@ import linearGraph from "./modelfit_linear.png";
 import quadraticGraph from "./modelfit_quadratic.png";
 
 In this tutorial, we'll explore a practical example of creating a model fitting
-dataflow.
+datakit.
 
-By the end, we'll have created a dataflow that can fit a linear or quadratic
+By the end, we'll have created a datakit that can fit a linear or quadratic
 model to an x/y input dataset using `scipy`. We'll add a **view** to graph the
 resulting fit curve against the data, and use **relationships** to handle
 different parameters for each model.
 
 <Aside>
   The complete code for this tutorial is available
-  [here](https://github.com/opendatastudio/helloworld-dataflow/tree/main/modelfit).
+  [here](https://github.com/opendatastudio/helloworld-datakit/tree/main/modelfit).
 </Aside>
 
-## Creating a new dataflow
+## Creating a new datakit
 
-First, we need to create a new dataflow:
+First, we need to create a new datakit:
 
 ```bash
 opends new modelfit
-cd modelfit-dataflow
+cd modelfit-datakit
 ```
 
 ## Creating the algorithm configuration
@@ -497,7 +497,7 @@ opends show fit
 In order to be able to analyse whether our fit was a good one, we need to be
 able to graph the calculated fit curve.
 
-We can create a graph visualisation by defining a `view` on our dataflow.
+We can create a graph visualisation by defining a `view` on our datakit.
 
 First, create a views directory under the algorithm folder:
 
@@ -517,7 +517,7 @@ Now we can write a view configuration for our fit graph:
 }
 ```
 
-Here we are telling our dataflow that we want to use a matplotlib script,
+Here we are telling our datakit that we want to use a matplotlib script,
 `fitGraph.py`, to generate this view, and we want to execute this graph script
 in the `python-run-base` container.
 
@@ -569,7 +569,7 @@ In order to fit to a quadratic model, we need a way to dynamically add an extra
 parameter whenever the value of the `model` algorithm variable is set to
 `quadratic`.
 
-We can do this using **relationships**. Relationships in a dataflow describe
+We can do this using **relationships**. Relationships in a datakit describe
 relationships between variables. Whenever a variable changes, the CLI checks if
 there are any relationships that apply to that variable value, and if so updates
 any associated variables to the required values.
@@ -847,4 +847,4 @@ opends view fitGraph
   width="600"
 />
 
-Congratulations, you've written and executed your own model fitting dataflow.
+Congratulations, you've written and executed your own model fitting datakit.
