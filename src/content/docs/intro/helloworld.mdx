@@ -1,16 +1,16 @@
 ---
 title: Hello world!
-description: A very simple dataflow tutorial
+description: A very simple datakit tutorial
 ---
 
 import { FileTree } from "@astrojs/starlight/components";
 import { Aside } from "@astrojs/starlight/components";
 
-Let's create a simple dataflow to add some numbers together.
+Let's create a simple datakit to add some numbers together.
 
 <Aside type="tip">
   All of the examples covered in this tutorial are available at our
-  [helloworld-dataflow](https://github.com/opendatastudio/helloworld-dataflow)
+  [helloworld-datakit](https://github.com/opendatastudio/helloworld-datakit)
   repository.
 </Aside>
 
@@ -45,50 +45,50 @@ cd python-run-base
 ./build.sh
 ```
 
-## Creating a new dataflow
+## Creating a new datakit
 
-Let's create a new dataflow. The `opends` CLI tool provides a convenient command
+Let's create a new datakit. The `opends` CLI tool provides a convenient command
 to do this:
 
 ```bash
 opends new helloworld
 ```
 
-This will create a new dataflow inside a directory called `helloworld-dataflow`.
+This will create a new datakit inside a directory called `helloworld-datakit`.
 
-This is what your new dataflow should look like:
+This is what your new datakit should look like:
 
 {/* prettier-ignore */}
 <FileTree>
-- helloworld-dataflow/
+- helloworld-datakit/
   - helloworld/
     - algorithm.json
     - algorithm.py
-  - dataflow.json
+  - datakit.json
 </FileTree>
 
-This simple starter dataflow contains an algorithm that takes a single numerical
+This simple starter datakit contains an algorithm that takes a single numerical
 input and multiplies it by 2.
 
 ## Your first run
 
-Let's run your new dataflow. First, initialise the default run:
+Let's run your new datakit. First, initialise the default run:
 
 ```bash
-cd helloworld-dataflow
+cd helloworld-datakit
 opends init
 ```
 
-This will create a directory called `helloworld.run` in the root of your
-dataflow directory.
+This will create a directory called `helloworld.run` in the root of your datakit
+directory.
 
 {/* prettier-ignore */}
 <FileTree>
-- helloworld-dataflow/
+- helloworld-datakit/
   - helloworld/
   - **helloworld.run/**
     - run.json
-  - dataflow.json
+  - datakit.json
 </FileTree>
 
 This directory stores all the information about your run so that others can
@@ -207,7 +207,7 @@ input definition to the `inputs` list:
 ```
 
 Save and close `helloworld/algorithm.json`. We will need to initialise the
-dataflow again to add this new variable to the run configuration:
+datakit again to add this new variable to the run configuration:
 
 ```bash
 opends reset  # This deletes any existing runs

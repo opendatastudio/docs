@@ -1,19 +1,19 @@
 ---
-title: What are dataflows?
-description: An introduction to opendata.studio dataflows
+title: What are datakits?
+description: An introduction to opendata.studio datakits
 ---
 
-In opendata.studio, a dataflow is a structured way to organise and bundle a data
+In opendata.studio, a datakit is a structured way to organise and bundle a data
 analysis in a reusable and reproducible format.
 
-A dataflow contains:
+A datakit contains:
 
 - The analysis algorithm and its execution environment
 - Input and output data, along with configurable options
 - Saved run states from algorithm executions
 - User interface definitions
 
-These elements are defined by individual components inside each dataflow:
+These elements are defined by individual components inside each datakit:
 
 - **resources**: Store tabular data
 - **algorithms** and **containers**: Define the algorithm code and execution
@@ -29,5 +29,5 @@ tracked, creating a reproducible record of the analysis process. Once an
 analysis is completed, the results and process can be easily shared or
 published, ensuring transparency and allowing others to build upon your work.
 
-This tutorial will introduce you to working with dataflows. To begin with, let's
-create a simple dataflow containing an algorithm that adds two numbers together.
+This tutorial will introduce you to working with datakits. To begin with, let's
+create a simple datakit containing an algorithm that adds two numbers together.

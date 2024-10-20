@@ -16,9 +16,9 @@ export default defineConfig({
       },
       sidebar: [
         {
-          label: "Introduction to dataflows",
+          label: "Introduction to datakits",
           items: [
-            { label: "What are dataflows?", slug: "intro/intro" },
+            { label: "What are datakits?", slug: "intro/intro" },
             { label: "Hello world!", slug: "intro/helloworld" },
             { label: "Working with tabular data", slug: "intro/tabulardata" },
             { label: "Handling multiple runs", slug: "intro/multipleruns" },
@@ -33,7 +33,7 @@ export default defineConfig({
           label: "Advanced tutorials",
           items: [
             {
-              label: "Creating a model fitting dataflow",
+              label: "Creating a model fitting datakit",
               slug: "advanced/modelfit",
             },
             { label: "Using metaschemas", slug: "advanced/metaschemas" },
