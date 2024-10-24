@@ -9,8 +9,9 @@ analysis in a reusable and reproducible format.
 A datakit contains:
 
 - The analysis algorithm and its execution environment
-- Input and output data, along with configurable options
 - Saved run states from algorithm executions
+- Input and output data, along with configurable options
+- Visualisations of data, including graph and table specifications
 - User interface definitions
 
 These elements are defined by individual components inside each datakit:
