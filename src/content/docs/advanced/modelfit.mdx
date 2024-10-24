@@ -19,7 +19,7 @@ different parameters for each model.
 
 <Aside>
   The complete code for this tutorial is available
-  [here](https://github.com/opendatastudio/helloworld-datakit/tree/main/modelfit).
+  [here](https://github.com/open-datakit/helloworld-datakit/tree/main/modelfit).
 </Aside>
 
 ## Creating a new datakit
@@ -27,7 +27,7 @@ different parameters for each model.
 First, we need to create a new datakit:
 
 ```bash
-opends new modelfit
+dk new modelfit
 cd modelfit-datakit
 ```
 
@@ -44,9 +44,9 @@ configuration:
   "name": "modelfit",
   "title": "Model fitting example",
   "description": "A simple model fitting algorithm demonstrating relationships",
-  "profile": "opends-algorithm",
+  "profile": "datakit-algorithm",
   "code": "algorithm.py",
-  "container": "opends/python-run-base:latest",
+  "container": "open-datakit/python-run-base:latest",
   "signature": {
     "inputs": [
       {
@@ -470,26 +470,26 @@ input and output resources, we are ready to run the algorithm.
 Initialise the default run:
 
 ```bash
-opends init
+dk init
 ```
 
 Load the input data:
 
 ```bash
-opends load data data/modelfix.csv
+dk load data data/modelfix.csv
 ```
 
 And execute the run:
 
 ```bash
-opends run
+dk run
 ```
 
 Once our algorithm finishes running, we can then view our outputs:
 
 ```bash
-opends show outputParams
-opends show fit
+dk show outputParams
+dk show fit
 ```
 
 ## Creating a graph visualisation
@@ -512,7 +512,7 @@ Now we can write a view configuration for our fit graph:
   "name": "fitGraph",
   "specType": "matplotlib",
   "specFile": "fitGraph.py",
-  "container": "opends/python-run-base:latest",
+  "container": "open-datakit/python-run-base:latest",
   "resources": ["data", "fit"]
 }
 ```
@@ -542,7 +542,7 @@ Now we can execute the view script and generate the graph. Run the following
 command:
 
 ```bash
-opends view fitGraph
+dk view fitGraph
 ```
 
 This command will execute our graph script in the `python-run-base` container,
@@ -588,7 +588,7 @@ In order to add an extra parameter whenever the value of `model` is set to
   "name": "relationships",
   "title": "Relationships",
   "descriptions": "Relationship rules for model fit algorithm inputs and outputs",
-  "profile": "opends-relationships",
+  "profile": "datakit-relationships",
   "algorithm": "modelfit",
   "relationships": [
     {
@@ -775,7 +775,7 @@ Let's test this out by running the algorithm again. Check the current parameter
 values:
 
 ```bash
-opends show inputParams
+dk show inputParams
 ```
 
 ```
@@ -791,13 +791,13 @@ opends show inputParams
 Now let's set the `model` to `quadratic`:
 
 ```bash
-opends set model quadratic
+dk set model quadratic
 ```
 
 And check the parameter values again:
 
 ```bash
-opends show inputParams
+dk show inputParams
 ```
 
 You should see the following:
@@ -819,8 +819,8 @@ As you can see, an extra parameter called `c` has been added.
 Now we can run the algorithm and view the optimised parameters:
 
 ```bash
-opends run
-opends show outputParams
+dk run
+dk show outputParams
 ```
 
 ```
@@ -838,7 +838,7 @@ opends show outputParams
 And have a look at our resulting fit curve:
 
 ```bash
-opends view fitGraph
+dk view fitGraph
 ```
 
 <Image

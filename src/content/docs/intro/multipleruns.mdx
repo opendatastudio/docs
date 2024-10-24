@@ -78,9 +78,9 @@ take only two valid values: `mean` and `median` with the `enum` property.
 To see how this works, we can try and set our new input to the wrong value:
 
 ```bash
-opends reset
-opends init  # Ensure we initialise a new run to use the updated algorithm signature
-opends set function "mode"
+dk reset
+dk init  # Ensure we initialise a new run to use the updated algorithm signature
+dk set function "mode"
 ```
 
 This should throw the following error:
@@ -92,7 +92,7 @@ Variable value must be one of ['mean', 'median']
 However we can set the value to "median" with no issue:
 
 ```bash
-opends set function "median"
+dk set function "median"
 ```
 
 ## Creating a new run
@@ -100,8 +100,8 @@ opends set function "median"
 Let's create a new run to find the median of this dataset.
 
 ```bash
-opends reset  # Reset the datakit to a clean state again
-opends init helloworld.median
+dk reset  # Reset the datakit to a clean state again
+dk init helloworld.median
 ```
 
 This command tells the CLI tool that we want to create a new run named
@@ -113,7 +113,7 @@ following the period can be anything you like.
 You can check which run is currently active by running:
 
 ```bash
-opends get-run
+dk get-run
 ```
 
 ### Executing the run
@@ -121,15 +121,15 @@ opends get-run
 Let's find the median of our dataset. Run the following:
 
 ```bash
-opends load data data/tabulardata.csv  # Load our data
-opends set function "median"           # Set our calculation function to "median"
-opends run                             # Run the algorithm
+dk load data data/tabulardata.csv  # Load our data
+dk set function "median"           # Set our calculation function to "median"
+dk run                             # Run the algorithm
 ```
 
 Your result should look like:
 
 ```bash
-opends show result
+dk show result
 ```
 
 | time | result   |
@@ -186,21 +186,21 @@ Now, say we want to calculate the mean of the same dataset without losing our
 previous result. To do this, we can create a new named run:
 
 ```bash
-opends init helloworld.mean
+dk init helloworld.mean
 ```
 
 Now we can load our input data, and set the function we want to use to calculate
 the result:
 
 ```bash
-opends load data data/tabulardata.csv
-opends set function "mean"
+dk load data data/tabulardata.csv
+dk set function "mean"
 ```
 
 Your result should look like:
 
 ```bash
-opends show result
+dk show result
 ```
 
 | time | result   |
@@ -216,8 +216,8 @@ Now, since we saved the result of our previous run in `helloworld.median`, we
 can easily compare the two results:
 
 ```bash
-opends set-run helloworld.median
-opends show result  # Print the "median" run result
+dk set-run helloworld.median
+dk show result  # Print the "median" run result
 ```
 
 Here they are side by side:

@@ -10,7 +10,7 @@ Let's create a simple datakit to add some numbers together.
 
 <Aside type="tip">
   All of the examples covered in this tutorial are available at our
-  [helloworld-datakit](https://github.com/opendatastudio/helloworld-datakit)
+  [helloworld-datakit](https://github.com/open-datakit/helloworld-datakit)
   repository.
 </Aside>
 
@@ -18,8 +18,8 @@ Let's create a simple datakit to add some numbers together.
 
 ### Installing the CLI
 
-First, we need to install the opendata.studio
-[opends-cli](https://pypi.org/project/opends-cli/) tool.
+First, we need to install the [datakitcli](https://pypi.org/project/datakitcli/)
+tool.
 
 ```bash
 python --version  # Ensure you have a Python version >= 3.11 installed
@@ -27,10 +27,10 @@ pip install opendatacli
 ```
 
 If everything is working, you should see the following output followed by a help
-message when you type `opends`:
+message when you type `dk`:
 
 ```bash
-# Usage: opends [OPTIONS] COMMAND [ARGS]...
+# Usage: dk [OPTIONS] COMMAND [ARGS]...
 # ...
 ```
 
@@ -40,18 +40,18 @@ This only needs to be done once. In the future, this container will be available
 on DockerHub to download and you can skip this step.
 
 ```bash
-git clone https://github.com/opendatastudio/python-run-base
+git clone https://github.com/open-datakit/python-run-base
 cd python-run-base
 ./build.sh
 ```
 
 ## Creating a new datakit
 
-Let's create a new datakit. The `opends` CLI tool provides a convenient command
-to do this:
+Let's create a new datakit. The `dk` CLI tool provides a convenient command to
+do this:
 
 ```bash
-opends new helloworld
+dk new helloworld
 ```
 
 This will create a new datakit inside a directory called `helloworld-datakit`.
@@ -76,7 +76,7 @@ Let's run your new datakit. First, initialise the default run:
 
 ```bash
 cd helloworld-datakit
-opends init
+dk init
 ```
 
 This will create a directory called `helloworld.run` in the root of your datakit
@@ -100,24 +100,24 @@ By default, the input variable `x` is set to the default value specified in
 `algorithm.json`. You can set the value of `x` to something else if you'd like:
 
 ```bash
-opends set x 9001
+dk set x 9001
 ```
 
 Now we can execute the run:
 
 ```bash
-opends run
+dk run
 ```
 
 And view the result:
 
 ```bash
-opends show x
+dk show x
 # ╭─ x ─╮
 # │ 42  │
 # ╰─────╯
 
-opends show result
+dk show result
 # ╭─ result ─╮
 # │ 84       │
 # ╰──────────╯
@@ -136,9 +136,9 @@ First, open up `helloworld/algorithm.json`:
 {
   "name": "helloworld",
   "title": "New algorithm",
-  "profile": "opends-algorithm",
+  "profile": "datakit-algorithm",
   "code": "algorithm.py",
-  "container": "opends/python-run-base:latest",
+  "container": "open-datakit/python-run-base:latest",
   "signature": {
     "inputs": [
       {
@@ -210,19 +210,19 @@ Save and close `helloworld/algorithm.json`. We will need to initialise the
 datakit again to add this new variable to the run configuration:
 
 ```bash
-opends reset  # This deletes any existing runs
-opends init
+dk reset  # This deletes any existing runs
+dk init
 ```
 
 Now we can set and view the new input variable value:
 
 ```bash
-opends show y
+dk show y
 # ╭─ y ─╮
 # │ 100 │
 # ╰─────╯
 
-opends set y 200
+dk set y 200
 # ╭─ y ─╮
 # │ 200 │
 # ╰─────╯
@@ -243,9 +243,9 @@ def main(x, y):
 Now we're ready to execute:
 
 ```bash
-opends run
+dk run
 
-opends show result
+dk show result
 # ╭─ result ─╮
 # │ 242      │
 # ╰──────────╯

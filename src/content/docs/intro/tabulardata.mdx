@@ -21,7 +21,7 @@ Then, create files for your new input `data` and output `result` resources under
 the `helloworld` algorithm folder:
 
 ```bash
-opends reset
+dk reset
 mkdir helloworld/resources
 touch helloworld/resources/data.json
 touch helloworld/resources/result.json
@@ -217,19 +217,19 @@ Now we can load our data to be analysed. As always, first we need to initialise
 a new run:
 
 ```bash
-opends init
+dk init
 ```
 
 And now we can load our data into the `data` resource:
 
 ```bash
-opends load data/tabulardata.csv
+dk load data/tabulardata.csv
 ```
 
 Let's check the data was loaded correctly:
 
 ```bash
-opends show data
+dk show data
 ```
 
 This should return something like:
@@ -249,13 +249,13 @@ And we're ready to run the algorithm!
 Execute the currently active run:
 
 ```bash
-opends run
+dk run
 ```
 
 Now let's look at our result:
 
 ```bash
-opends show result
+dk show result
 ```
 
 This should return:

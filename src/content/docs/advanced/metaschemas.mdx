@@ -15,9 +15,9 @@ allowable structure of a tabular data resource.
 
 In this tutorial, we'll build on the datakit from the
 [tabular data tutorial](/intro/tabulardata). You can find it in the
-[helloworld-datakit](https://github.com/opendatastudio/helloworld-datakit)
+[helloworld-datakit](https://github.com/open-datakit/helloworld-datakit)
 repository, under the
-["tabulardata" algorithm folder](https://github.com/opendatastudio/helloworld-datakit/tree/main/tabulardata).
+["tabulardata" algorithm folder](https://github.com/open-datakit/helloworld-datakit/tree/main/tabulardata).
 
 ## Algorithm overview
 
@@ -55,7 +55,7 @@ Now create a metaschema for our input data named
 {
   "name": "data",
   "title": "Metaschema for input data",
-  "profile": "opends-metaschema",
+  "profile": "datakit-metaschema",
   "schema": {
     "primaryKey": "time",
     "fields": [
@@ -98,9 +98,9 @@ Edit `tabulardata/algorithm.json`:
   "name": "tabulardata",
   "title": "Time series average",
   "description": "A simple algorithm that takes a time series input table and averages its values on the time axis",
-  "profile": "opends-algorithm",
+  "profile": "datakit-algorithm",
   "code": "algorithm.py",
-  "container": "opends/python-run-base:latest",
+  "container": "open-datakit/python-run-base:latest",
   "signature": {
     "inputs": [
       {
@@ -175,15 +175,15 @@ time,y0,y1,y2,y3,y4,y5
 Initialise and load it into our algorithm:
 
 ```bash
-opends reset  # Remember to reset to remove any previous runs of our algorithm
-opends init
-opends load data data/tabulardata2.csv
+dk reset  # Remember to reset to remove any previous runs of our algorithm
+dk init
+dk load data data/tabulardata2.csv
 ```
 
 Check it loaded correctly:
 
 ```bash
-opends show data
+dk show data
 ```
 
 ```
@@ -261,13 +261,13 @@ for this dataset.
 To check everything is working correctly, we can execute the algorithm:
 
 ```bash
-opends run
+dk run
 ```
 
 And check our result:
 
 ```bash
-opends show result
+dk show result
 ```
 
 ```
