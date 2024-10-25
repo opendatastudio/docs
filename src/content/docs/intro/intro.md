@@ -8,20 +8,20 @@ analysis in a reusable and reproducible format.
 
 A datakit contains:
 
-- The analysis algorithm and its execution environment
-- Saved run states from algorithm executions
-- Input and output data, along with configurable options
-- Visualisations of data, including graph and table specifications
-- User interface definitions
+- the analysis algorithm and its execution environment
+- saved run states from algorithm executions
+- input and output data, along with configurable options
+- visualisations of data, including graph and table specifications
+- user interface definitions.
 
 These elements are defined by individual components inside each datakit:
 
-- **resources**: Store tabular data
-- **algorithms** and **containers**: Define the algorithm code and execution
+- **resources**: store tabular data
+- **algorithms** and **containers**: define the algorithm code and execution
   environment
-- **views**: Visualise data (e.g.: graphs)
-- **interfaces**: Describe user interfaces for the analysis, rendered through
-  web components
+- **views**: visualise data (e.g.: graphs)
+- **interfaces**: describe user interfaces for the analysis, rendered through
+  web components.
 
 These elements form a complete description of a data analysis that can be
 executed through our web interface or
