@@ -3,17 +3,17 @@ import starlight from "@astrojs/starlight";
 
 // https://astro.build/config
 export default defineConfig({
-  site: "https://docs.opendatakit.io",
+  site: "https://docs.opendata.studio",
   integrations: [
     starlight({
-      title: "opendatakit docs",
+      title: "opendata.studio docs",
       customCss: ["./src/styles/custom.css"],
       logo: {
         light: "./src/assets/logo.svg",
         dark: "./src/assets/logo_dark.svg",
       },
       social: {
-        github: "https://github.com/open-datakit/docs",
+        github: "https://github.com/opendatastudio/docs",
       },
       sidebar: [
         {

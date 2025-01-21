@@ -19,7 +19,7 @@ different parameters for each model.
 
 <Aside>
   The complete code for this tutorial is available
-  [here](https://github.com/open-datakit/helloworld-datakit/tree/main/modelfit).
+  [here](https://github.com/opendatastudio/helloworld-datakit/tree/main/modelfit).
 </Aside>
 
 ## Creating a new datakit
@@ -46,7 +46,7 @@ configuration:
   "description": "A simple model fitting algorithm demonstrating relationships",
   "profile": "datakit-algorithm",
   "code": "algorithm.py",
-  "container": "open-datakit/python-run-base:latest",
+  "container": "opendatastudio/python-run-base:latest",
   "signature": {
     "inputs": [
       {
@@ -512,7 +512,7 @@ Now we can write a view configuration for our fit graph:
   "name": "fitGraph",
   "specType": "matplotlib",
   "specFile": "fitGraph.py",
-  "container": "open-datakit/python-run-base:latest",
+  "container": "opendatastudio/python-run-base:latest",
   "resources": ["data", "fit"]
 }
 ```

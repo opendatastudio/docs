@@ -6,10 +6,10 @@ description: Using custom Docker containers with datakits
 import { FileTree } from "@astrojs/starlight/components";
 import { Aside } from "@astrojs/starlight/components";
 
-By default, algorithms in opendatakit run in the python-run-base Docker
-container, which provides commonly used libraries such as `numpy` and `pandas`.
-If you need a library not included in this default container, you can easily
-create a custom Docker container to run your algorithm.
+By default, algorithms in a datakit run in the python-run-base Docker container,
+which provides commonly used libraries such as `numpy` and `pandas`. If you need
+a library not included in this default container, you can easily create a custom
+Docker container to run your algorithm.
 
 ## Creating a custom Docker container
 
@@ -25,7 +25,7 @@ touch helloworld/container/Dockerfile
 Inside the Dockerfile, write the following container definition:
 
 ```docker title="helloworld/container/Dockerfile"
-FROM open-datakit/python-run-base:latest
+FROM opendatastudio/python-run-base:latest
 
 RUN pip install scikit-learn
 ```
@@ -66,7 +66,7 @@ Edit the algorithm.json file to point to your new container:
 }
 ```
 
-This tells opendatakit to use `mycontainer` when executing the `helloworld`
+This tells the datakit to use `mycontainer` when executing the `helloworld`
 algorithm.
 
 ## Importing our new dependency
