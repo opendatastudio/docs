@@ -12,9 +12,13 @@ export default defineConfig({
         light: "./src/assets/logo.svg",
         dark: "./src/assets/logo_dark.svg",
       },
-      social: {
-        github: "https://github.com/opendatastudio/docs",
-      },
+      social: [
+        {
+          icon: "github",
+          label: "GitHub",
+          href: "https://github.com/opendatastudio/docs",
+        },
+      ],
       sidebar: [
         {
           label: "Introduction to datakits",
