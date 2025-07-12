@@ -11,9 +11,10 @@
     "prepare": "husky install"
   },
   "dependencies": {
-    "@astrojs/check": "^0.9.3",
-    "@astrojs/starlight": "^0.26.1",
-    "astro": "^4.10.2",
+    "@astrojs/check": "^0.9.4",
+    "@astrojs/cloudflare": "^12.6.0",
+    "@astrojs/starlight": "^0.34.5",
+    "astro": "^5.11.0",
     "sharp": "^0.32.5",
     "typescript": "^5.5.4"
   },
@@ -21,7 +22,8 @@
     "husky": ">=6",
     "lint-staged": ">=10",
     "prettier": "^3.3.3",
-    "prettier-plugin-astro": "^0.14.1"
+    "prettier-plugin-astro": "^0.14.1",
+    "wrangler": "^4.24.3"
   },
   "lint-staged": {
     "*.{js,mjs,ts,json,css,md,mdx}": "prettier --write"

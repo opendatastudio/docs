@@ -1,9 +1,12 @@
 import { defineConfig } from "astro/config";
 import starlight from "@astrojs/starlight";
 
+import cloudflare from "@astrojs/cloudflare";
+
 // https://astro.build/config
 export default defineConfig({
   site: "https://docs.opendata.studio",
+
   integrations: [
     starlight({
       title: "opendata.studio docs",
@@ -12,9 +15,13 @@ export default defineConfig({
         light: "./src/assets/logo.svg",
         dark: "./src/assets/logo_dark.svg",
       },
-      social: {
-        github: "https://github.com/opendatastudio/docs",
-      },
+      social: [
+        {
+          icon: "github",
+          label: "GitHub",
+          href: "https://github.com/opendatastudio/docs",
+        },
+      ],
       sidebar: [
         {
           label: "Introduction to datakits",
@@ -51,4 +58,6 @@ export default defineConfig({
       ],
     }),
   ],
+
+  adapter: cloudflare(),
 });
